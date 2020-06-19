@@ -1,0 +1,384 @@
+import React, {Component} from 'react';
+import {
+  Container,
+  Thumbnail,
+  Button,
+  Text,
+  Icon,
+  Card,
+  CardItem,
+  Left,
+  Right,
+  Item,
+  View,
+  Input,
+  Form,
+  Label,
+} from 'native-base';
+import Pencil from 'react-native-vector-icons/FontAwesome';
+import EmailIcon from 'react-native-vector-icons/Fontisto';
+
+import {
+  Image,
+  Alert,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+// import {Link} from '@react-navigation/native';
+// import ChangePassword from '../components/ChangePassword';
+
+// import FooterMenu from '../components/FooterMenu'
+import UploadImage from '../components/UploadImage';
+
+import {db} from '../utils/firebaseConfig';
+import {connect} from 'react-redux';
+import {logoutAction, getDataUserAction} from '../redux/actions/UserAction.js';
+
+import AsyncStorage from '@react-native-community/async-storage';
+class UserProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      role: '',
+      token: '',
+      id: '',
+      uid: '',
+      users: {},
+      show: false,
+      isEdit: false,
+      fullName: '',
+    };
+  }
+  getStoreData = async name => {
+    try {
+      const value = await AsyncStorage.getItem(`${name}`);
+
+      if (name === 'uid') {
+        this.setState({email: value});
+      }
+      return value;
+    } catch (e) {
+      // error reading value
+    }
+  };
+  logout = async () => {
+    Alert.alert(
+      'Confirmation',
+      'Are You Sure To Logout ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            await this.props.logoutAction();
+            await AsyncStorage.clear().then(response => {
+              Alert.alert('Thank You..');
+              this.props.navigation.navigate('Login');
+            });
+          },
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
+  };
+  componentDidMount = async () => {
+    await this.getStoreData('uid');
+    this.getUserData();
+  };
+  //   componentDidUpdate = prevState => {
+  //     if (prevState.uid !== this.state.uid) {
+  //       this.getUserData();
+  //     }
+  //   };
+  handleEditNameUser = () => {
+    if (this.state.fullName !== '') {
+      db.database()
+        .ref('Users/' + this.props.dataUser.uid)
+        .update({
+          fullName: this.state.fullName,
+        })
+        .then(() => {
+          this.props.getDataUserAction(this.props.dataUser.uid);
+          this.setState({isEdit: false, fullName: ''});
+          // this.props.navigation.navigate('UserProfile');
+        });
+    } else {
+      return;
+    }
+  };
+  getUserData = async () => {
+    await db
+      .database()
+      .ref('Users/')
+      .on('value', snapshot => {
+        const currentUser = db.auth().currentUser.uid;
+        // const data = snapshot.val();
+        const user = Object.values(snapshot.val());
+        const friendResult = user.filter(
+          friendUser => friendUser.uid === currentUser,
+        );
+        this.setState({
+          users: friendResult[0],
+        });
+      });
+  };
+  //   componentDidMount = async () => {
+  //     await this.getStoreData('uid');
+  //     // await this.getStoreData('role');
+  //     // await this.getStoreData('token');
+  //     // await this.getStoreData('id');
+  //     // if(this.props.email &&this.state.email!==""){
+  //     //   this.setState({email:this.props.email})
+
+  //     // }
+  //   };
+  //   logout = async () => {
+  //     Alert.alert(
+  //       'Confirmation',
+  //       'Are You Sure To Logout ?',
+  //       [
+  //         {
+  //           text: 'Cancel',
+  //           onPress: () => console.log('Cancel Pressed'),
+  //           style: 'cancel',
+  //         },
+  //         {
+  //           text: 'OK',
+  //           onPress: async () => {
+  //             await this.props.logoutUserAction();
+  //             await AsyncStorage.clear().then(response => {
+  //               Alert.alert('Thank You..');
+  //               this.props.navigation.navigate('Login');
+  //             });
+  //           },
+  //         },
+  //       ],
+  //       {
+  //         cancelable: false,
+  //       },
+  //     );
+  //   };
+
+  handleHide = () => {
+    this.setState({
+      show: false,
+    });
+  };
+  render() {
+    var user = db.auth().currentUser;
+    console.log(user);
+    console.log(this.state.fullName);
+    // this.getUserData();
+    return (
+      <Container style={styles.container}>
+        {/* <CustomHeader name="Profile" props={this.props}/> */}
+        <Card transparent style={styles.card}>
+          {/* <Thumbnail  source={require('../../image/nasa.png')} style={{borderRadius:60}}/> */}
+          <Text style={styles.title}>Profile</Text>
+
+          <CardItem transparent style={styles.cardItem1}>
+            <Input
+              disabled={this.state.isEdit ? false : true}
+              defaultValue={
+                this.state.fullName
+                  ? this.state.fullName
+                  : this.props.dataUser.fullName
+              }
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                fontSize: 20,
+                padding: 10,
+                color: 'goldenrod',
+                textAlign: 'center',
+                position: 'absolute',
+                top: 0,
+                left: 140,
+                width: '40%',
+                backgroundColor: this.state.isEdit ? 'white' : 'black',
+              }}
+              onChangeText={e => this.setState({fullName: e})}
+            />
+            {this.state.isEdit ? (
+              <Button
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  top: 0,
+                  backgroundColor: 'green',
+                }}
+                onPress={this.handleEditNameUser}>
+                <Text> Save </Text>
+              </Button>
+            ) : (
+              <></>
+            )}
+            {/* <Text style={styles.textCardTitle}>
+              {this.props.dataUser.fullName}
+            </Text> */}
+
+            {/* <Thumbnail
+                source={require('../../image/nasa.png')}
+                style={styles.thumbnail}
+              /> */}
+
+            {/* <Left style={{top:0,left:0,position:"absolute"}}> */}
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({show: true});
+                console.log('ditekan');
+              }}>
+              <Image
+                style={styles.image}
+                source={
+                  this.props.dataUser.image
+                    ? {
+                        uri: this.props.dataUser.image,
+                      }
+                    : require('../../image/photoprofile.png')
+                }
+              />
+            </TouchableOpacity>
+            <Pencil
+              style={{position: 'absolute', left: 100, top: 85}}
+              size={20}
+              name="pencil"
+              color="white"
+            />
+            {/* </Left> */}
+            <Right>
+              <Item style={styles.item}>
+                <EmailIcon
+                  name="email"
+                  color="white"
+                  size={30}
+                  style={{marginTop: 21}}
+                />
+                <Text style={styles.textEmail}>
+                  {' '}
+                  {this.props.dataUser.email}{' '}
+                </Text>
+              </Item>
+            </Right>
+          </CardItem>
+
+          <CardItem transparent style={styles.cardItem2}>
+            <Left>
+              <Button
+                style={styles.buttonUser}
+                onPress={() =>
+                  this.setState({
+                    isEdit: !this.state.isEdit,
+                    fullName: this.props.dataUser.fullName,
+                  })
+                }>
+                <Icon style={styles.iconUser} name="person" />
+                <Text style={styles.white}>
+                  {this.state.isEdit ? 'Cancel' : 'Change Name'}
+                </Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button style={styles.buttonLogout} onPress={this.logout}>
+                <Thumbnail small source={require('../../image/logout.png')} />
+                <Text style={styles.black}>Logout</Text>
+              </Button>
+            </Right>
+          </CardItem>
+        </Card>
+        <UploadImage show={this.state.show} handleHide={this.handleHide} />
+        <View>
+          {/* <Footer >
+         {this.props.route.params.role==1?
+           <FooterMenu role="1"  type="profile"  props={this.props}/>
+             :
+             <FooterMenu role="2" type="profile"  props={this.props}/>
+
+         }
+      </Footer> */}
+        </View>
+      </Container>
+    );
+  }
+}
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: 'black'},
+
+  view: {height: '150%'},
+  card: {backgroundColor: 'black'},
+  imageBackground: {
+    height: 270,
+    width: null,
+    flex: 1,
+    borderRadius: 25,
+    resizeMode: 'cover',
+  },
+  title: {
+    fontSize: 30,
+    padding: 20,
+    color: 'white',
+    textAlign: 'center',
+  },
+  cardItem1: {
+    backgroundColor: 'black',
+    marginLeft: 10,
+    marginRight: 10,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+  },
+  cardItem2: {
+    backgroundColor: 'black',
+    marginLeft: 10,
+    marginRight: 10,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+  textCardTitle: {
+    fontSize: 20,
+    padding: 10,
+    color: 'goldenrod',
+    textAlign: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 130,
+  },
+  thumbnail: {borderRadius: 60, position: 'absolute', right: 0, top: 0},
+  image: {height: 100, width: 100, borderRadius: 100, top: 0, left: 0},
+  item: {marginLeft: 60},
+  textEmail: {marginTop: 30, color: 'white', marginLeft: '10%', width: '100%'},
+  textRole: {
+    fontSize: 30,
+    padding: 10,
+    fontStyle: 'italic',
+    color: 'black',
+    marginLeft: '20%',
+  },
+  buttonUser: {backgroundColor: '#ff8c00', borderRadius: 5},
+  iconUser: {color: 'white', marginLeft: 10},
+  white: {color: 'white'},
+  black: {color: 'black'},
+  buttonLogout: {backgroundColor: 'white', borderRadius: 5},
+});
+
+const mapStateToProps = ({reducerUser}) => {
+  return {
+    dataUser: reducerUser.dataUser,
+  };
+};
+const mapDispatchToProps = {
+  logoutAction,
+  getDataUserAction,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserProfile);
+
+// export default Login;
