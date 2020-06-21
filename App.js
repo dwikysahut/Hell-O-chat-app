@@ -8,7 +8,7 @@ import IconMaps from 'react-native-vector-icons/MaterialCommunityIcons';
 // import AsyncStorage from '@react-native-community/async-storage';
 import configureStore from './src/redux/store';
 import {Provider} from 'react-redux';
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
 
 import Home from './src/screens/Home';
 import Maps from './src/screens/Maps';
@@ -93,13 +93,13 @@ class App extends Component {
                 }}
               />
               {/* )} */}
-              {/* <Screen
-            name="Profile"
-            component={Profile}
-            options={{
-              headerShown: true
-            }}
-          /> */}
+              <Screen
+                name="Coba"
+                component={Coba}
+                options={{
+                  headerShown: true,
+                }}
+              />
               {/* <Screen name="Dimensions" component={Dimensions} /> */}
             </Navigator>
           </NavigationContainer>

@@ -7,13 +7,13 @@ import {
   rejected,
   fulfilled,
   loginUserAction,
-  registerUserAction,
+  // registerUserAction,
   deleteUserAction,
   logoutUserAction,
-  refreshTokenAction,
+  // refreshTokenAction,
   putUserAction,
 } from '../actions/actionTypes';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 const initialValue = {
   data: [],
@@ -145,8 +145,6 @@ const dataUser = (prevState = initialValue, action) => {
         token: action.payload,
       };
     case loginUserAction + fulfilled:
-      // eslint-disable-next-line eqeqeq
-
       return {
         ...prevState,
         isLoading: false,
@@ -156,8 +154,6 @@ const dataUser = (prevState = initialValue, action) => {
         isLogin: true,
       };
     case loginUserAction:
-      // eslint-disable-next-line eqeqeq
-
       return {
         ...prevState,
         isLoading: false,

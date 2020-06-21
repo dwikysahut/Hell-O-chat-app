@@ -5,7 +5,7 @@ import UserCard from '../components/UserCard';
 
 import {
   // SafeAreaView,
-  ScrollView,
+  // ScrollView,
   View,
   FlatList,
   StyleSheet,
@@ -13,10 +13,10 @@ import {
   // TouchableNativeFeedbackBase,
   // InteractionManager,
   KeyboardAvoidingView,
-  ImageBackground,
+  // ImageBackground,
   BackHandler,
   Alert,
-  ActivityIndicator,
+  // ActivityIndicator,
 } from 'react-native';
 import {
   Spinner,
@@ -34,9 +34,9 @@ import {
   // Footer,
   Input,
   // FooterTab,
-  Button,
+  // Button,
   Icon,
-  Text,
+  // Text,
 } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -97,7 +97,6 @@ class Home extends Component {
   onButtonPress = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     // then navigate
-    // eslint-disable-next-line no-undef
     this.props.navigation.goBack(null);
   };
   handleBackButton = () => {
@@ -122,6 +121,9 @@ class Home extends Component {
     return true;
   };
   componentWillUnmount() {
+    // db.database()
+    // .ref('Users/')
+    // .off();
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
   getUserData = async () => {
@@ -129,12 +131,13 @@ class Home extends Component {
       .database()
       .ref('Users/')
       .on('value', snapshot => {
-        const currentUser = db.auth().currentUser.uid;
-        console.log(currentUser);
+        const currentUserId = db.auth().currentUser.uid;
+        console.log(currentUserId);
         // const data = snapshot.val();
         const user = Object.values(snapshot.val());
+        console.log(snapshot.val());
         const friendResult = user.filter(
-          friendUser => friendUser.uid !== currentUser,
+          friendUser => friendUser.uid !== currentUserId,
         );
         this.setState({
           users: friendResult,
@@ -453,84 +456,90 @@ class Home extends Component {
           <Spinner color="darkcyan" />
         </Container> */}
         {/* ) : ( */}
-        <KeyboardAvoidingView style={styles.container}>
-          <View style={styles.container}>
-            {/* <Header style={styles.bgColor} searchBar rounded> */}
-            {/* <View  > */}
-            <Item style={styles.bgColor}>
-              <Icon name="ios-search" style={styles.whiteColor} />
-              <Input
-                placeholder="Search"
-                placeholderTextColor="white"
-                style={styles.whiteColor}
-                onSubmitEditing={this.handlerChange}
-                onChangeText={e => this.handlerSearch('title', e)}
+        {this.state.users.length <= 0 ? (
+          <Container style={styles.spinnerStyle}>
+            <Spinner color="white" />
+          </Container>
+        ) : (
+          <KeyboardAvoidingView style={styles.container}>
+            <View style={styles.container}>
+              {/* <Header style={styles.bgColor} searchBar rounded> */}
+              {/* <View  > */}
+              <Item style={styles.bgColor}>
+                <Icon name="ios-search" style={styles.whiteColor} />
+                <Input
+                  placeholder="Search"
+                  placeholderTextColor="white"
+                  style={styles.whiteColor}
+                  onSubmitEditing={this.handlerChange}
+                  onChangeText={e => this.handlerSearch('name', e)}
+                />
+              </Item>
+
+              <FlatList
+                style={styles.flatlistStyle}
+                data={this.state.users}
+                renderItem={({item}) => (
+                  <UserCard
+                    data={item}
+                    key={item.id}
+                    refresh={this.componentDidMount}
+                    props={this.props}
+                    item={item}
+                  />
+                )}
+                initialNumToRender={10}
+                keyExtractor={(item, index) => index.toString()}
+                // ListHeaderComponent={this.renderHeader}
+
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.handleRefresh}
+                  />
+                }
+                onEndReached={this.handleLoadMore}
+                onEndReachedThreshold={0.5}
+                onMomentumScrollBegin={() => {
+                  // eslint-disable-next-line no-sequences
+                  (this.onEndReachedCalledDuringMomentum = false),
+                    this.setState({loadMore: false});
+                }}
+                ref={ref => {
+                  this.flatListRef = ref;
+                }}
+                ListFooterComponent={this._renderFooter}
+                onScrollEndDrag={() =>
+                  this.setState({upButton: true, showbookSlide: false})
+                }
+                // onScroll={() => this.setState({showbookSlide: false})}
               />
-            </Item>
-
-            <FlatList
-              style={styles.flatlistStyle}
-              data={this.state.users}
-              renderItem={({item}) => (
-                <UserCard
-                  data={item}
-                  key={item.id}
-                  refresh={this.componentDidMount}
-                  props={this.props}
-                  item={item}
-                />
+              {this.state.upButton ? (
+                <Fab
+                  style={styles.fabGoTop}
+                  position="bottomRight"
+                  onPress={() => {
+                    this.flatListRef.scrollToOffset({
+                      animated: true,
+                      offset: 0,
+                      // eslint-disable-next-line no-sequences
+                    }),
+                      this.setState({upButton: false, showbookSlide: true});
+                  }}>
+                  <Icon name="ios-arrow-up" />
+                </Fab>
+              ) : (
+                <></>
               )}
-              initialNumToRender={10}
-              keyExtractor={(item, index) => index.toString()}
-              // ListHeaderComponent={this.renderHeader}
-
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.handleRefresh}
-                />
-              }
-              onEndReached={this.handleLoadMore}
-              onEndReachedThreshold={0.5}
-              onMomentumScrollBegin={() => {
-                // eslint-disable-next-line no-sequences
-                (this.onEndReachedCalledDuringMomentum = false),
-                  this.setState({loadMore: false});
-              }}
-              ref={ref => {
-                this.flatListRef = ref;
-              }}
-              ListFooterComponent={this._renderFooter}
-              onScrollEndDrag={() =>
-                this.setState({upButton: true, showbookSlide: false})
-              }
-              // onScroll={() => this.setState({showbookSlide: false})}
-            />
-            {this.state.upButton ? (
-              <Fab
-                style={styles.fabGoTop}
-                position="bottomRight"
-                onPress={() => {
-                  this.flatListRef.scrollToOffset({
-                    animated: true,
-                    offset: 0,
-                    // eslint-disable-next-line no-sequences
-                  }),
-                    this.setState({upButton: false, showbookSlide: true});
-                }}>
-                <Icon name="ios-arrow-up" />
-              </Fab>
-            ) : (
-              <></>
-            )}
-          </View>
-          {/* {this.state.loadMore ? (
+            </View>
+            {/* {this.state.loadMore ? (
                 // <View style={styles.spinnerStyle}  >
                 <Spinner color="darkcyan" />
               ) : (
                 <></>
               )} */}
-        </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+        )}
       </>
     );
   }
@@ -567,7 +576,7 @@ const styles = StyleSheet.create({
   spinnerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   backButton: {
     marginLeft: 0,

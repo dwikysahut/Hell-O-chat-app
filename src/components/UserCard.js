@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 
   image: {height: 70, width: 70, borderRadius: 100, top: 0, left: 0},
   cardItem: {backgroundColor: 'black', width: 100},
-  textGenre: {fontSize: 10},
+  textGenre: {fontSize: 10, alignItems: 'flex-end'},
   body: {paddingLeft: 0},
   text: {fontSize: 20, fontWeight: 'bold', color: 'white'},
   textDate: {textAlign: 'right', fontStyle: 'italic'},
@@ -87,7 +87,10 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     height: 30,
     marginLeft: '30%',
-    paddingRight: 5,
+    paddingRight: 10,
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+    textAlign: 'right',
   },
   title: {
     fontSize: 32,

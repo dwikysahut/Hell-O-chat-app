@@ -4,7 +4,7 @@ import {
   Thumbnail,
   Button,
   Text,
-  Icon,
+  // Icon,
   Card,
   CardItem,
   Left,
@@ -12,8 +12,8 @@ import {
   Item,
   View,
   Input,
-  Form,
-  Label,
+  // Form,
+  // Label,
 } from 'native-base';
 import Pencil from 'react-native-vector-icons/FontAwesome';
 import EmailIcon from 'react-native-vector-icons/Fontisto';
@@ -21,9 +21,10 @@ import EmailIcon from 'react-native-vector-icons/Fontisto';
 import {
   Image,
   Alert,
-  ImageBackground,
+  // ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 // import {Link} from '@react-navigation/native';
 // import ChangePassword from '../components/ChangePassword';
@@ -48,7 +49,9 @@ class UserProfile extends Component {
       users: {},
       show: false,
       isEdit: false,
-      fullName: '',
+      fullName: this.props.dataUser.fullName
+        ? this.props.dataUser.fullName
+        : '',
     };
   }
   getStoreData = async name => {
@@ -77,9 +80,20 @@ class UserProfile extends Component {
           text: 'OK',
           onPress: async () => {
             await this.props.logoutAction();
+
             await AsyncStorage.clear().then(response => {
-              Alert.alert('Thank You..');
-              this.props.navigation.navigate('Login');
+              db.auth()
+                .signOut()
+                .then(() => {
+                  console.log('logout');
+                  this.props.navigation.navigate('Login');
+                })
+                .catch(function(error) {
+                  // An error happened.
+                  console.log(error);
+                });
+              // Alert.alert('Thank You..');
+              // this.props.navigation.navigate('Login');
             });
           },
         },
@@ -91,7 +105,7 @@ class UserProfile extends Component {
   };
   componentDidMount = async () => {
     await this.getStoreData('uid');
-    this.getUserData();
+    // this.getUserData();
   };
   //   componentDidUpdate = prevState => {
   //     if (prevState.uid !== this.state.uid) {
@@ -107,29 +121,38 @@ class UserProfile extends Component {
         })
         .then(() => {
           this.props.getDataUserAction(this.props.dataUser.uid);
-          this.setState({isEdit: false, fullName: ''});
+          this.setState({isEdit: false});
           // this.props.navigation.navigate('UserProfile');
         });
     } else {
-      return;
+      this.showToast();
     }
   };
-  getUserData = async () => {
-    await db
-      .database()
-      .ref('Users/')
-      .on('value', snapshot => {
-        const currentUser = db.auth().currentUser.uid;
-        // const data = snapshot.val();
-        const user = Object.values(snapshot.val());
-        const friendResult = user.filter(
-          friendUser => friendUser.uid === currentUser,
-        );
-        this.setState({
-          users: friendResult[0],
-        });
-      });
+  showToast = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      'Display Name Cannot Empty',
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+      25,
+      50,
+    );
   };
+  // getUserData = async () => {
+  //   await db
+  //     .database()
+  //     .ref('Users/')
+  //     .on('value', snapshot => {
+  //       const currentUser = db.auth().currentUser.uid;
+  //       // const data = snapshot.val();
+  //       const user = Object.values(snapshot.val());
+  //       const friendResult = user.filter(
+  //         friendUser => friendUser.uid === currentUser,
+  //       );
+  //       this.setState({
+  //         users: friendResult[0],
+  //       });
+  //     });
+  // };
   //   componentDidMount = async () => {
   //     await this.getStoreData('uid');
   //     // await this.getStoreData('role');
@@ -173,9 +196,9 @@ class UserProfile extends Component {
     });
   };
   render() {
-    var user = db.auth().currentUser;
-    console.log(user);
-    console.log(this.state.fullName);
+    // var user = db.auth().currentUser;
+    // console.log(user);
+    // console.log(this.state.fullName);
     // this.getUserData();
     return (
       <Container style={styles.container}>
@@ -187,35 +210,51 @@ class UserProfile extends Component {
           <CardItem transparent style={styles.cardItem1}>
             <Input
               disabled={this.state.isEdit ? false : true}
-              defaultValue={
-                this.state.fullName
-                  ? this.state.fullName
-                  : this.props.dataUser.fullName
-              }
+              defaultValue={this.props.dataUser.fullName}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 fontSize: 20,
-                padding: 10,
+                padding: 0,
                 color: 'goldenrod',
                 textAlign: 'center',
                 position: 'absolute',
                 top: 0,
                 left: 140,
-                width: '40%',
+                width: '60%',
+                height: 40,
                 backgroundColor: this.state.isEdit ? 'white' : 'black',
               }}
-              onChangeText={e => this.setState({fullName: e})}
+              maxLength={16}
+              onChangeText={e => {
+                this.setState({fullName: e});
+              }}
             />
+            {this.state.isEdit ? (
+              <Text
+                note
+                style={{
+                  color: 'white',
+                  position: 'absolute',
+                  left: 240,
+                  top: 40,
+                }}>
+                {this.state.fullName.length}/16 characters
+              </Text>
+            ) : (
+              <></>
+            )}
+
             {this.state.isEdit ? (
               <Button
                 style={{
                   position: 'absolute',
                   right: 0,
                   top: 0,
-                  backgroundColor: 'green',
+                  height: 40,
+                  backgroundColor: 'orange',
                 }}
                 onPress={this.handleEditNameUser}>
-                <Text> Save </Text>
+                <Text> Ok </Text>
               </Button>
             ) : (
               <></>
@@ -270,21 +309,45 @@ class UserProfile extends Component {
           </CardItem>
 
           <CardItem transparent style={styles.cardItem2}>
-            <Left>
-              <Button
-                style={styles.buttonUser}
-                onPress={() =>
-                  this.setState({
-                    isEdit: !this.state.isEdit,
-                    fullName: this.props.dataUser.fullName,
-                  })
-                }>
-                <Icon style={styles.iconUser} name="person" />
-                <Text style={styles.white}>
-                  {this.state.isEdit ? 'Cancel' : 'Change Name'}
-                </Text>
-              </Button>
-            </Left>
+            {!this.state.isEdit ? (
+              <Left>
+                <Button
+                  style={styles.buttonUser}
+                  onPress={() =>
+                    this.setState({
+                      isEdit: !this.state.isEdit,
+                    })
+                  }>
+                  <Pencil
+                    style={{marginLeft: 10}}
+                    size={20}
+                    name="pencil"
+                    color="white"
+                  />
+                  <Text style={styles.white}>Change Name</Text>
+                </Button>
+              </Left>
+            ) : (
+              <></>
+              // <Left>
+              //   <Button
+              //     style={styles.buttonUser}
+              //     onPress={() =>{
+              //       this.setState({
+              //         isEdit: !this.state.isEdit,
+              //         fullName: this.props.dataUser.fullName,
+              //       });
+              //       this.props.getDataUserAction(this.props.dataUser.uid);
+              //     }
+              //     }>
+              //     <Icon style={styles.iconUser} name="person" />
+              //     <Text style={styles.white}>
+              //       Cancel
+              //     </Text>
+              //   </Button>
+              // </Left>
+            )}
+
             <Right>
               <Button style={styles.buttonLogout} onPress={this.logout}>
                 <Thumbnail small source={require('../../image/logout.png')} />

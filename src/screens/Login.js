@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {Button, Text, View, Item, Input} from 'native-base';
 import {
   Alert,
-  ImageBackground,
+  // ImageBackground,
   Image,
-  KeyboardAvoidingView,
+  // KeyboardAvoidingView,
   ToastAndroid,
 } from 'react-native';
 import {db} from '../utils/firebaseConfig';
@@ -122,30 +122,37 @@ class Login extends Component {
     // await this.storeData('token',response.data.data.token)
     // await this.setState({isLogin: true, show: true})
     if (this.state.validEmail && this.state.validPassword) {
-      this.props.loginAction(email, password);
-      console.log(this.getData('uid'));
-      db.auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          db.auth().onAuthStateChanged(Users => {
-            db.database()
-              .ref(`Users/${Users.uid}`)
-              .once('value')
-              .then(data => {
-                console.log(data.val());
-              });
-            console.log(Users.multiFactor);
+      await this.props.loginAction(email, password);
+      // console.log(this.getData('uid'));
+      this.setState({email: '', password: ''});
 
-            Users ? this.storeData('uid', Users.uid) : AsyncStorage.clear();
-          });
-          this.setState({error: '', loading: false});
-          this.setState({email: '', password: ''});
-          this.getData('Users');
+      db.auth().onAuthStateChanged(user => {
+        if (user) {
           this.props.navigation.navigate('Home');
-        })
-        .catch(() => {
-          this.showToast();
-        });
+        }
+      });
+      //   db.auth()
+      //     .signInWithEmailAndPassword(email, password)
+      //     .then(() => {
+      //       db.auth().onAuthStateChanged(Users => {
+      //         db.database()
+      //           .ref(`Users/${Users.uid}`)
+      //           .once('value')
+      //           .then(data => {
+      //             console.log(data.val());
+      //           });
+      //         console.log(Users.multiFactor);
+
+      //         Users ? this.storeData('uid', Users.uid) : AsyncStorage.clear();
+      //       });
+      //       this.setState({error: '', loading: false});
+      //       this.setState({email: '', password: ''});
+      //       this.getData('Users');
+      //       this.props.navigation.navigate('Home');
+      //     })
+      //     .catch(() => {
+      //       this.showToast();
+      //     });
     }
   };
   render() {
@@ -203,7 +210,7 @@ class Login extends Component {
             </Text> // <Text style={{color: 'red'}}>Input Valid email</Text>
           ) : (
             <Text note style={styles.yellowColor}>
-              Hint : Input valid Email ( ex : xxx@gmail.com)
+              Input valid Email ( ex : xxx@gmail.com)
             </Text>
           )}
         </View>

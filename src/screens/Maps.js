@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions, Image} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {View, StyleSheet, Image} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
 import {db} from '../utils/firebaseConfig';
 import {connect} from 'react-redux';
 
@@ -17,7 +17,7 @@ class Maps extends Component {
     db.database()
       .ref('Users/')
       .on('value', snapshot => {
-        const currentUserId = db.auth().currentUser.uid;
+        // const currentUserId = db.auth().currentUser.uid;
         const allUser = Object.values(snapshot.val());
         this.setState({
           userList: allUser,
@@ -33,7 +33,7 @@ class Maps extends Component {
       <Marker
         coordinate={{latitude: data.latitude, longitude: data.longitude}}
         // pinColor={'purple'} // any color
-        title={data.fullName}
+        title={data.uid === this.props.dataUser.uid ? 'Me' : data.fullName}
         description={'Hi.. I am Here'}>
         <Image
           source={
@@ -76,7 +76,7 @@ class Maps extends Component {
   }
 }
 
-const {height, width} = Dimensions.get('window');
+// const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   view: {
     ...StyleSheet.absoluteFillObject,

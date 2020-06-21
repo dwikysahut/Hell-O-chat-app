@@ -2,13 +2,13 @@ import {
   getUserAction,
   logoutUserAction,
   loginUserAction,
-  registerUserAction,
-  deleteUserAction,
-  refreshTokenAction,
-  putUserAction,
+  // registerUserAction,
+  // deleteUserAction,
+  // refreshTokenAction,
+  // putUserAction,
 } from './actionTypes';
 import {db} from '../../utils/firebaseConfig';
-import {ToastAndroid, Alert} from 'react-native';
+import {ToastAndroid} from 'react-native';
 
 // export const getUserActionCreator = token => {
 //   return {
@@ -48,22 +48,31 @@ export const loginAction = (email, password) => async dispatch => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         db.auth().onAuthStateChanged(Users => {
-          db.database()
-            .ref(`Users/${Users.uid}`)
-            .once('value')
-            .then(data => {
-              // console.log(data.val());
+          if (Users) {
+            db.database()
+              .ref(`Users/${Users.uid}`)
+              .once('value')
+              .then(data => {
+                // console.log(data.val());
 
-              dispatch({
-                type: loginUserAction,
-                payload: data.val(),
+                dispatch({
+                  type: loginUserAction,
+                  payload: data.val(),
+                });
               });
-            });
-          Users ? storeData('uid', Users.uid) : AsyncStorage.clear();
+            Users ? storeData('uid', Users.uid) : AsyncStorage.clear();
+          }
         });
       })
       .catch(() => {
-        // Alert.alert('Invalid Email Or Password');
+        //  Alert.alert('Invalid Email Or Password');
+        ToastAndroid.showWithGravityAndOffset(
+          'Incorrect username or Password',
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+          25,
+          50,
+        );
       });
   } catch (error) {
     console.log(error);

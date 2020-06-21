@@ -35,6 +35,7 @@ class Register extends Component {
     isShow: false,
     emailExist: '',
     currentLocate: {},
+    showCustomToast: false,
   };
   handlerChange = (name, e) => {
     //  console.log(e.nativeEvent.text)
@@ -60,6 +61,15 @@ class Register extends Component {
       });
     }
   };
+  showCustomToast = message => {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+      25,
+      50,
+    );
+  };
   showToast = () => {
     ToastAndroid.showWithGravityAndOffset(
       'Email has Already Taken ',
@@ -75,13 +85,18 @@ class Register extends Component {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)
       ) {
         // this.setState({ isEmailValid: false })
-
-        Alert.alert('You have entered an invalid email address!');
+        this.showCustomToast('You have entered an invalid email address!');
+        // Alert.alert('You have entered an invalid email address!');
         return false;
       }
     }
+    if (!this.state.fullName || this.state.fullName === '') {
+      this.showCustomToast('Display Name Cannot Empty');
+      this.setState({isEmptyEmail: true});
+      return;
+    }
     if (!this.state.email || this.state.email === '') {
-      Alert.alert('Caution', 'email Cannot Empty');
+      this.showCustomToast('Email Cannot Empty');
       this.setState({isEmptyEmail: true});
       return;
     }
@@ -181,11 +196,23 @@ class Register extends Component {
           <Item>
             <Input
               style={styles.inputText}
-              placeholder="Full Name"
+              placeholder="Display Name"
               name="fullName"
               placeholderTextColor="white"
               onChange={e => this.handlerChange('fullName', e)}
+              maxLength={16}
             />
+            {this.state.fullName.length > 0 ? (
+              <Text
+                note
+                style={{
+                  color: 'white',
+                }}>
+                {this.state.fullName.length}/16 characters
+              </Text>
+            ) : (
+              <></>
+            )}
           </Item>
         </View>
         <View style={styles.inputView}>

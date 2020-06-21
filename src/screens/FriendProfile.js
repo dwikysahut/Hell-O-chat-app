@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Container,
-  Thumbnail,
   Button,
   Text,
   Icon,
@@ -15,8 +14,8 @@ import {
 } from 'native-base';
 import {
   Image,
-  Alert,
-  ImageBackground,
+  // Alert,
+  // ImageBackground,
   StyleSheet,
   BackHandler,
 } from 'react-native';
@@ -28,8 +27,8 @@ import EmailIcon from 'react-native-vector-icons/Fontisto';
 // import CustomHeader from '../components/CustomHeader'
 import {db} from '../utils/firebaseConfig';
 // import {connect} from 'react-redux';
-import {logoutAction} from '../redux/actions/UserAction.js';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+// import {logoutAction} from '../redux/actions/UserAction.js';
+import MapView, {Marker} from 'react-native-maps';
 import AsyncStorage from '@react-native-community/async-storage';
 class FriendProfile extends Component {
   constructor(props) {
@@ -64,7 +63,6 @@ class FriendProfile extends Component {
   onButtonPress = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     // then navigate
-    // eslint-disable-next-line no-undef
     this.props.navigation.goBack(null);
   };
   handleBackButton = () => {

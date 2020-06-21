@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 // import FooterMenu from '../components/FooterMenu';
 // import { getAllBooks } from '../utils/http'
-import UserCard from '../components/UserCard';
+// import UserCard from '../components/UserCard';
 
 import {
   // SafeAreaView,
-  ScrollView,
+  // ScrollView,
   View,
   FlatList,
   StyleSheet,
-  RefreshControl,
+  // RefreshControl,
   TouchableOpacity,
   TextInput,
   Alert,
   BackHandler,
 } from 'react-native';
 import {
-  Item,
-  Input,
+  // Item,
+  // Input,
   // FooterTab,
   Button,
   Icon,
@@ -26,7 +26,7 @@ import {
 } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Iconsend from 'react-native-vector-icons/Ionicons';
-import {GiftedChat, Bubble, InputToolbar, Send} from 'react-native-gifted-chat';
+// import {GiftedChat, Bubble, InputToolbar, Send} from 'react-native-gifted-chat';
 import {db} from '../utils/firebaseConfig';
 import {database} from 'firebase';
 
@@ -65,7 +65,6 @@ class ChatRoom extends Component {
   componentDidMount() {
     this.loadMessage();
     console.log(this.props.route.params.item.uid);
-    // eslint-disable-next-line react/no-did-mount-set-state
     // this.setState({
     //   messages: [
     //     {
@@ -85,33 +84,39 @@ class ChatRoom extends Component {
   onButtonPress = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     // then navigate
-    // eslint-disable-next-line no-undef
     this.props.navigation.goBack(null);
   };
   handleBackButton = () => {
     this.onButtonPress();
   };
   componentWillUnmount() {
+    db.database()
+      .ref('messages/')
+      .child(`/${this.state.currentUserId}/`)
+      .child(`/${this.state.receiverUserId}/`)
+      .off();
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
   loadMessage() {
     db.auth().onAuthStateChanged(user => {
       //   console.log(this.props.route.params.item.uid);
-      this.setState({
-        currentUserId: user.uid,
-        receiverUserId: this.props.route.params.item.uid,
-      });
-      db.database()
-        .ref('messages/')
-        .child(`/${user.uid}/`)
-        .child(`/${this.state.receiverUserId}/`)
-        .on('child_added', value => {
-          this.setState(prevState => {
-            return {
-              messageList: [...prevState.messageList, value.val()],
-            };
-          });
+      if (user) {
+        this.setState({
+          currentUserId: user.uid,
+          receiverUserId: this.props.route.params.item.uid,
         });
+        db.database()
+          .ref('messages/')
+          .child(`/${user.uid}/`)
+          .child(`/${this.state.receiverUserId}/`)
+          .on('child_added', value => {
+            this.setState(prevState => {
+              return {
+                messageList: [...prevState.messageList, value.val()],
+              };
+            });
+          });
+      }
     });
   }
   getUserData = async () => {
@@ -174,7 +179,7 @@ class ChatRoom extends Component {
         this.setState(previousState => ({
           // messageList: GiftedChat.append(previousState.messageList, messageText),
         }));
-        console.log(this.state.messageList);
+        // console.log(this.state.messageList);
       } catch (error) {
         console.log({error});
         Alert.alert('Pesan Gagal Terkirim');
@@ -217,7 +222,7 @@ class ChatRoom extends Component {
   // }
   render() {
     //   console.log(this.props.route.params)
-
+    // const {messag}
     console.disableYellowBox = true;
     return (
       <View style={styles.container}>
@@ -246,26 +251,35 @@ class ChatRoom extends Component {
         </Header>
         <FlatList
           ref={ref => (this.flatList = ref)}
+          style={styles.chatList}
+          //  inverted
           onContentSizeChange={() =>
             this.flatList.scrollToEnd({animated: true})
           }
           onLayout={() => this.flatList.scrollToEnd({animated: true})}
-          style={styles.list}
+          initialNumToRender={10}
           data={this.state.messageList}
           keyExtractor={item => item.id}
           renderItem={msg => {
-            // console.log(item);
+            // console.log(msg.item);
             const item = msg.item;
-            let itemStyle =
-              item.from !== this.state.currentUserId
-                ? styles.itemMessageIn
-                : styles.itemMessageOut;
+            // let itemStyle =
+            //   item.from !== this.state.currentUserId
+            //     ? styles.itemMessageIn
+            //     : styles.itemMessageOut;
             let timeStyle =
               item.from !== this.state.currentUserId
                 ? styles.timeMessageIn
                 : styles.timeMessageOutBottom;
             return (
-              <View style={[styles.item, itemStyle]}>
+              <View
+                style={[
+                  styles.item,
+                  item.from !== this.state.currentUserId
+                    ? styles.itemMessageIn
+                    : styles.itemMessageOut,
+                ]}>
+                {/* <Text style={styles.time}>{item.createdAt}</Text> */}
                 <View style={[styles.chatTemplateMessage]}>
                   {/* {item.from === this.state.currentUserId ? (
                     <Text style={styles.timeMessageOut}>
@@ -306,7 +320,13 @@ class ChatRoom extends Component {
                             .substr(0, 5)}
                     </Text>
                   ) : (
-                    <Text style={timeStyle}>
+                    <Text
+                      note
+                      style={
+                        item.from !== this.state.currentUserId
+                          ? styles.timeMessageIn
+                          : styles.timeMessageOutBottom
+                      }>
                       {new Date().getDate() ===
                       new Date(item.createdAt).getDate()
                         ? 'Today '
@@ -335,10 +355,13 @@ class ChatRoom extends Component {
               multiline={true}
             />
           </View>
-
-          <TouchableOpacity style={styles.btnSend} onPress={this.sendMessage}>
-            <Iconsend name="md-send" color="orange" size={23} />
-          </TouchableOpacity>
+          {this.state.textMessage.length > 0 ? (
+            <TouchableOpacity style={styles.btnSend} onPress={this.sendMessage}>
+              <Iconsend name="md-send" color="orange" size={23} />
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
         </View>
         {/* <GiftedChat
           messages={this.state.messageList}
@@ -376,7 +399,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     fontSize: 11,
     marginTop: 0,
-    color: '#c9c9c9',
+    color: 'black',
   },
   timeMessageIn: {
     alignSelf: 'flex-start',
@@ -405,7 +428,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  list: {
+  chatList: {
     paddingHorizontal: 17,
   },
   footer: {
@@ -463,9 +486,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
   },
   time: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-start',
     margin: 0,
-    fontSize: 2,
+    fontSize: 10,
     color: '#000',
   },
   item: {

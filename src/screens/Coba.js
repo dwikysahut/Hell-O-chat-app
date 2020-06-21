@@ -35,6 +35,9 @@ const Coba = () => {
     listItem.push({
       id: newItem,
     });
+    // listItem.remove().then(function(){
+    //   console.log('sucess');
+    // });
   };
   const handleAdd = () => {
     addItem(item);
