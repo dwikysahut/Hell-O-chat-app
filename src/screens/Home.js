@@ -91,7 +91,15 @@ class Home extends Component {
   };
 
   componentDidMount = () => {
-    this.getUserData();
+    if (this.props.dataUser.uid) {
+      this.getUserData();
+      db.database()
+        .ref(`Users/${this.props.dataUser.uid}`)
+        .update({
+          status: 'Online',
+        })
+        .then(() => console.log('background'));
+    }
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   };
   onButtonPress = () => {
@@ -121,28 +129,30 @@ class Home extends Component {
     return true;
   };
   componentWillUnmount() {
-    // db.database()
-    // .ref('Users/')
-    // .off();
+    db.database()
+      .ref('Users/')
+      .off();
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
   getUserData = async () => {
-    await db
-      .database()
-      .ref('Users/')
-      .on('value', snapshot => {
-        const currentUserId = db.auth().currentUser.uid;
-        console.log(currentUserId);
-        // const data = snapshot.val();
-        const user = Object.values(snapshot.val());
-        console.log(snapshot.val());
-        const friendResult = user.filter(
-          friendUser => friendUser.uid !== currentUserId,
-        );
-        this.setState({
-          users: friendResult,
+    if (this.props.dataUser.uid) {
+      await db
+        .database()
+        .ref('Users/')
+        .on('value', snapshot => {
+          const currentUserId = db.auth().currentUser.uid;
+          console.log(currentUserId);
+          // const data = snapshot.val();
+          const user = Object.values(snapshot.val());
+          console.log(snapshot.val());
+          const friendResult = user.filter(
+            friendUser => friendUser.uid !== currentUserId,
+          );
+          this.setState({
+            users: friendResult,
+          });
         });
-      });
+    }
   };
   handlerSearch = async (name, e) => {
     // e.preventDefault()

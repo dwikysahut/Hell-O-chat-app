@@ -124,10 +124,10 @@ class Login extends Component {
     if (this.state.validEmail && this.state.validPassword) {
       await this.props.loginAction(email, password);
       // console.log(this.getData('uid'));
-      this.setState({email: '', password: ''});
 
       db.auth().onAuthStateChanged(user => {
         if (user) {
+          this.setState({email: '', password: ''});
           this.props.navigation.navigate('Home');
         }
       });
@@ -201,8 +201,11 @@ class Login extends Component {
             />
             {/* <Icon name='close-circle' /> */}
             {/* <Icon name='checkmark-circle' /> */}
+            
           </Item>
-          {this.state.email &&
+      
+        </View>
+        {this.state.email &&
           // eslint-disable-next-line prettier/prettier
           (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) ? (
             <Text note style={styles.greenColor}>
@@ -213,7 +216,7 @@ class Login extends Component {
               Input valid Email ( ex : xxx@gmail.com)
             </Text>
           )}
-        </View>
+
         {/* <Text style={{ padding: 10, paddingTop: 5 }}>Password</Text> */}
         {/* <KeyboardAvoidingView> */}
         <View style={styles.inputView}>

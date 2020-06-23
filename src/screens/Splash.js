@@ -24,6 +24,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {Container} from 'native-base';
 import {db} from '../utils/firebaseConfig';
+import {connect} from 'react-redux';
 
 class Home extends Component {
   constructor(props) {
@@ -73,35 +74,36 @@ class Home extends Component {
   //   }
   // }
   componentDidMount = async () => {
-    db.auth().onAuthStateChanged(user => {
-      if (user) {
-        setTimeout(() => {
-          this.props.navigation.navigate('Home');
-        }, 2500);
-      } else {
-        setTimeout(() => {
-          this.props.navigation.navigate('Login');
-        }, 2500);
-      }
-    });
-    // if (
-    //   (await this.getStoreData('uid')) === '' ||
-    //   (await this.getStoreData('uid')) === null
-    // ) {
-    //   //   await this.getData();
-    //   this.setState({login: false});
-    //   setTimeout(() => {
-    //     this.props.navigation.navigate('Login');
-    //   }, 2500);
-    // } else {
-    //   setTimeout(async () => {
-    //     // await this.getData();
-    //     this.setState({login: true});
-    //     // if (this.props.isFulfilled === true) {
-    //     this.props.navigation.navigate('Home');
-    //     // }
-    //   }, 5000);
-    // }
+    // db.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     setTimeout(() => {
+    //       this.props.navigation.navigate('Home');
+    //     }, 2500);
+    //   } else {
+    //     setTimeout(() => {
+    //       this.props.navigation.navigate('Login');
+    //     }, 2500);
+    //   }
+    // });
+    if (
+      (await this.props.dataUser.uid) === '' ||
+      (await this.props.dataUser.uid) === null ||
+      !this.props.dataUser.uid
+    ) {
+      //   await this.getData();
+      this.setState({login: false});
+      setTimeout(() => {
+        this.props.navigation.navigate('Login');
+      }, 2500);
+    } else {
+      setTimeout(async () => {
+        // await this.getData();
+        this.setState({login: true});
+        // if (this.props.isFulfilled === true) {
+        this.props.navigation.navigate('Home');
+        // }
+      }, 5000);
+    }
   };
   render() {
     return (
@@ -158,4 +160,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+const mapStateToProps = ({reducerUser}) => {
+  return {
+    dataUser: reducerUser.dataUser,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(Home);

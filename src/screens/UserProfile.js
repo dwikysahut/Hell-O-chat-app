@@ -79,7 +79,15 @@ class UserProfile extends Component {
         {
           text: 'OK',
           onPress: async () => {
-            await this.props.logoutAction();
+            db.database()
+              .ref(`Users/${this.props.dataUser.uid}`)
+              .update({
+                status: 'Offline',
+              })
+              .then(() => {
+                this.props.logoutAction();
+              })
+              .catch(error => console.log(error));
 
             await AsyncStorage.clear().then(response => {
               db.auth()
@@ -160,35 +168,6 @@ class UserProfile extends Component {
   //     // await this.getStoreData('id');
   //     // if(this.props.email &&this.state.email!==""){
   //     //   this.setState({email:this.props.email})
-
-  //     // }
-  //   };
-  //   logout = async () => {
-  //     Alert.alert(
-  //       'Confirmation',
-  //       'Are You Sure To Logout ?',
-  //       [
-  //         {
-  //           text: 'Cancel',
-  //           onPress: () => console.log('Cancel Pressed'),
-  //           style: 'cancel',
-  //         },
-  //         {
-  //           text: 'OK',
-  //           onPress: async () => {
-  //             await this.props.logoutUserAction();
-  //             await AsyncStorage.clear().then(response => {
-  //               Alert.alert('Thank You..');
-  //               this.props.navigation.navigate('Login');
-  //             });
-  //           },
-  //         },
-  //       ],
-  //       {
-  //         cancelable: false,
-  //       },
-  //     );
-  //   };
 
   handleHide = () => {
     this.setState({
@@ -307,7 +286,7 @@ class UserProfile extends Component {
               </Item>
             </Right>
           </CardItem>
-
+          {/* <Text style={styles.textEmail}> {this.props.dataUser.status} </Text> */}
           <CardItem transparent style={styles.cardItem2}>
             {!this.state.isEdit ? (
               <Left>

@@ -143,7 +143,7 @@ class UploadImage extends Component {
           type: 'image/jpeg',
           uri: response.uri,
         };
-        this.setState({photo: response});
+        // this.setState({photo: response});
         console.log('asssss = ', response);
         //  const source = { uri: 'data:image/jpeg;base64,' + response.data};
 

@@ -14,6 +14,7 @@ import Home from './src/screens/Home';
 import Maps from './src/screens/Maps';
 import Coba from './src/screens/Coba';
 import ChatRoom from './src/screens/ChatRoom';
+import MainRouter from './src/MainRouter';
 
 import Splash from './src/screens/Splash';
 
@@ -34,232 +35,116 @@ const {Navigator, Screen} = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-class App extends Component {
-  render() {
-    return (
-      //   <NavigationContainer>
-      //     <Provider store={store}>
+const App = () => {
+  return (
+    //   <NavigationContainer>
+    //     <Provider store={store}>
 
-      // </Provider>
-      // </NavigationContainer>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer>
-            <Navigator initialRouteName="Splash">
+    // </Provider>
+    // </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <MainRouter />
+        {/* <NavigationContainer>
+          <Navigator initialRouteName="Splash">
+            <Screen
+              name="Splash"
+              component={Splash}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Screen
+              name="Home"
+              component={HomeTabNav}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <>
               <Screen
-                name="Splash"
-                component={Splash}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              {/* {this.props.isLogin ? ( */}
-              <Screen
-                name="Home"
-                component={this.HomeTabNav}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              {/* ) : ( */}
-              <>
-                <Screen
-                  name="Login"
-                  component={Login}
-                  options={{
-                    headerShown: false,
-                  }}
-                />
-                <Screen
-                  name="Register"
-                  component={Register}
-                  options={{
-                    headerShown: false,
-                  }}
-                />
-              </>
-              <Screen
-                name="FriendProfile"
-                component={FriendProfile}
+                name="Login"
+                component={Login}
                 options={{
                   headerShown: false,
                 }}
               />
               <Screen
-                name="ChatRoom"
-                component={ChatRoom}
+                name="Register"
+                component={Register}
                 options={{
                   headerShown: false,
                 }}
               />
-              {/* )} */}
-              <Screen
-                name="Coba"
-                component={Coba}
-                options={{
-                  headerShown: true,
-                }}
-              />
-              {/* <Screen name="Dimensions" component={Dimensions} /> */}
-            </Navigator>
-          </NavigationContainer>
-        </PersistGate>
-      </Provider>
-    );
-  }
-  HomeTabNav() {
-    return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        // activeColor="black"
-        // shifting={true}
-        // barStyle={styles.barstyle}
-        tabBarOptions={{
-          inactiveTintColor: 'white',
-          activeTintColor: 'black',
-          activeBackgroundColor: 'white',
-          inactiveBackgroundColor: 'black',
-          keyboardHidesTabBar: true,
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: () => <Icon style={styles.colorIcon} name="home" />,
-          }}
-        />
-        <Tab.Screen
-          name="Maps"
-          component={Maps}
-          options={{
-            tabBarIcon: ({size}) => (
-              <IconMaps name="google-maps" color="orange" size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={UserProfile}
-          options={{
-            headerShown: true,
-            tabBarIcon: () => <Icon style={styles.colorIcon} name="person" />,
-          }}
-        />
-      </Tab.Navigator>
-    );
-  }
+            </>
+            <Screen
+              name="FriendProfile"
+              component={FriendProfile}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Screen
+              name="ChatRoom"
+              component={ChatRoom}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Screen
+              name="Coba"
+              component={Coba}
+              options={{
+                headerShown: true,
+              }}
+            />
+          </Navigator>
+        </NavigationContainer> */}
+      </PersistGate>
+    </Provider>
+  );
+};
 
-  // function ProfileScreen() {
-  //   return (
-  //   <Navigator initialRouteName="Profile">
-  //   <Screen name="User" component={User} />
-  //   <Screen name="Books" component={Books} options={{
-  //     headerShown: false,
-  //   }} />
-
-  //   <Screen
-  //     name="Profile"
-  //     component={Profile}
-  //     options={{
-  //       headerShown: true, headerLeft: null
-  //     }}
-  //   />
-  //   {/* <Screen name="Dimensions" component={Dimensions} /> */}
-  // </Navigator>
-  //   )
-  // }
-  // function BorrowScreen() {
-  //   return (
-  //   <Navigator tabBarOptions={{
-  //     style: {
-  //       backgroundColor: 'white',//color you want to change
-  //     }}
-  //   } initialRouteName="Borrow">
-  //   <Screen name="Home" component={Home} />
-  //   <Screen name="Login" component={Login} options={{
-  //     headerShown: false,
-
-  //   }} />
-  //   <Screen name="Register" component={Register} options={{
-  //     headerShown: false,
-
-  //   }} />
-  //   <Screen name="ManageAuthor" component={ManageAuthor} />
-
-  //   <Screen name="ManageGenre" component={ManageGenre} />
-  //   <Screen name="Author" component={Author} options={{
-  //     headerShown: true,
-
-  //   }} />
-  //   <Screen name="Genre" component={Genre} options={{
-  //     headerShown: true,
-
-  //   }} />
-  //   <Screen name="User" component={User} />
-  //   <Screen name="Books" component={Books} options={{
-  //     headerShown: false,
-
-  //   }} />
-  //   <Screen name="Borrow" component={Borrow} />
-  //   <Screen name="Detail" component={Detail}options={{
-  //     headerShown: false,
-
-  //   }} />
-  //   <Screen
-  //     name="Profile"
-  //     component={Profile}
-  //     options={{
-  //       headerShown: true, headerLeft: null
-  //     }}
-  //   />
-  //   {/* <Screen name="Dimensions" component={Dimensions} /> */}
-  // </Navigator>
-  //   )
-  // }
-  // function HomeScreen() {
-  //   return (
-  //     <Navigator initialRouteName="AllBooks">
-  //     <Screen name="Home" component={Books} />
-  //     <Screen name="AllBooks" component={AllBooks} options={{
-  //       headerShown: false,
-
-  //     }} />
-  //     {/* <Screen name="Register" component={Register} options={{
-  //       headerShown: false,
-
-  //     }} />
-  //     <Screen name="ManageAuthor" component={ManageAuthor} />
-
-  //     <Screen name="ManageGenre" component={ManageGenre} />
-  //     <Screen name="Author" component={Author} options={{
-  //       headerShown: true,
-
-  //     }} />
-  //     <Screen name="Genre" component={Genre} options={{
-  //       headerShown: true,
-
-  //     }} />
-  //     <Screen name="User" component={User} />
-  //     <Screen name="Books" component={Books} options={{
-  //       headerShown: false,
-
-  //     }} />
-  //     <Screen name="Borrow" component={Borrow} />
-  //     <Screen name="Detail" component={Detail}options={{
-  //       headerShown: false,
-
-  //     }} />
-  //     <Screen
-  //       name="Profile"
-  //       component={Profile}
-  //       options={{
-  //         headerShown: true, headerLeft: null
-  //       }} */}
-  //     />
-  //     {/* <Screen name="Dimensions" component={Dimensions} /> */}
-  //   </Navigator>
-  //   );
-  // }
+function HomeTabNav() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      // activeColor="black"
+      // shifting={true}
+      // barStyle={styles.barstyle}
+      tabBarOptions={{
+        inactiveTintColor: 'white',
+        activeTintColor: 'black',
+        activeBackgroundColor: 'white',
+        inactiveBackgroundColor: 'black',
+        keyboardHidesTabBar: true,
+      }}>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: () => <Icon style={styles.colorIcon} name="home" />,
+        }}
+      />
+      <Tab.Screen
+        name="Maps"
+        component={Maps}
+        options={{
+          tabBarIcon: ({size}) => (
+            <IconMaps name="google-maps" color="orange" size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={UserProfile}
+        options={{
+          headerShown: true,
+          tabBarIcon: () => <Icon style={styles.colorIcon} name="person" />,
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
 const styles = StyleSheet.create({
   barstyle: {backgroundColor: 'black', height: 50},

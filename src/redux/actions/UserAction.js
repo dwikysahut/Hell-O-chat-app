@@ -54,11 +54,18 @@ export const loginAction = (email, password) => async dispatch => {
               .once('value')
               .then(data => {
                 // console.log(data.val());
-
-                dispatch({
-                  type: loginUserAction,
-                  payload: data.val(),
-                });
+                db.database()
+                  .ref(`Users/${Users.uid}`)
+                  .update({
+                    status: 'Online',
+                  })
+                  .then(() => {
+                    dispatch({
+                      type: loginUserAction,
+                      payload: data.val(),
+                    });
+                  })
+                  .catch(error => console.log(error));
               });
             Users ? storeData('uid', Users.uid) : AsyncStorage.clear();
           }

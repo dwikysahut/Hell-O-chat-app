@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, TouchableOpacity, StyleSheet} from 'react-native';
 
-import {Card, CardItem, Text, Button, Left, Body} from 'native-base';
+import {Card, CardItem, Text, Button, Left, Body, Item} from 'native-base';
 // import {REACT_APP_API} from 'react-native-dotenv';
 function UserCard({data, refresh, navigation, props, item}) {
   // const URL_BASE = 'http://10.0.2.2:8080';
@@ -41,6 +41,24 @@ function UserCard({data, refresh, navigation, props, item}) {
             <Button disabled style={styles.buttonGenre}>
               <Text style={styles.textGenre}>{data.email}</Text>
             </Button>
+            <Item rounded>
+              <Button
+                style={
+                  data.status === 'Online'
+                    ? styles.buttonOnline
+                    : styles.buttonOffline
+                }>
+                <Text />
+              </Button>
+              <Text
+                style={
+                  data.status === 'Online'
+                    ? styles.textStatusOnline
+                    : styles.textStatusOffline
+                }>
+                {data.status}
+              </Text>
+            </Item>
             <Body />
 
             {/* <Text note style={styles.textDate}>
@@ -69,12 +87,41 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   whiteBackground: {backgroundColor: 'black'},
-
+  buttonOffline: {
+    borderRadius: 100,
+    backgroundColor: 'red',
+    height: 5,
+    width: 10,
+    alignSelf: 'flex-start',
+    margin: 5,
+  },
+  buttonOnline: {
+    borderRadius: 100,
+    backgroundColor: 'green',
+    height: 5,
+    width: 10,
+    alignSelf: 'flex-start',
+    margin: 5,
+  },
   image: {height: 70, width: 70, borderRadius: 100, top: 0, left: 0},
   cardItem: {backgroundColor: 'black', width: 100},
   textGenre: {fontSize: 10, alignItems: 'flex-end'},
   body: {paddingLeft: 0},
   text: {fontSize: 20, fontWeight: 'bold', color: 'white'},
+  textStatusOnline: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: 'green',
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  textStatusOffline: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: 'red',
+    marginLeft: 5,
+    marginRight: 5,
+  },
   textDate: {textAlign: 'right', fontStyle: 'italic'},
   item: {
     backgroundColor: 'rgba(52, 52, 52, 0.6)',
