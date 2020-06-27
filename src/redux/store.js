@@ -13,7 +13,13 @@ const enhancer = applyMiddleware(thunk, logger);
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['_persist'],
+  blacklist: [
+    'reducerBook',
+    'reducerAuthor',
+    'reducerBorrow',
+    'reducerGenre',
+    '_persist',
+  ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

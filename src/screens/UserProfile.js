@@ -26,10 +26,6 @@ import {
   TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
-// import {Link} from '@react-navigation/native';
-// import ChangePassword from '../components/ChangePassword';
-
-// import FooterMenu from '../components/FooterMenu'
 import UploadImage from '../components/UploadImage';
 
 import {db} from '../utils/firebaseConfig';
@@ -115,11 +111,6 @@ class UserProfile extends Component {
     await this.getStoreData('uid');
     // this.getUserData();
   };
-  //   componentDidUpdate = prevState => {
-  //     if (prevState.uid !== this.state.uid) {
-  //       this.getUserData();
-  //     }
-  //   };
   handleEditNameUser = () => {
     if (this.state.fullName !== '') {
       db.database()
@@ -145,45 +136,16 @@ class UserProfile extends Component {
       50,
     );
   };
-  // getUserData = async () => {
-  //   await db
-  //     .database()
-  //     .ref('Users/')
-  //     .on('value', snapshot => {
-  //       const currentUser = db.auth().currentUser.uid;
-  //       // const data = snapshot.val();
-  //       const user = Object.values(snapshot.val());
-  //       const friendResult = user.filter(
-  //         friendUser => friendUser.uid === currentUser,
-  //       );
-  //       this.setState({
-  //         users: friendResult[0],
-  //       });
-  //     });
-  // };
-  //   componentDidMount = async () => {
-  //     await this.getStoreData('uid');
-  //     // await this.getStoreData('role');
-  //     // await this.getStoreData('token');
-  //     // await this.getStoreData('id');
-  //     // if(this.props.email &&this.state.email!==""){
-  //     //   this.setState({email:this.props.email})
-
+ 
   handleHide = () => {
     this.setState({
       show: false,
     });
   };
   render() {
-    // var user = db.auth().currentUser;
-    // console.log(user);
-    // console.log(this.state.fullName);
-    // this.getUserData();
     return (
       <Container style={styles.container}>
-        {/* <CustomHeader name="Profile" props={this.props}/> */}
         <Card transparent style={styles.card}>
-          {/* <Thumbnail  source={require('../../image/nasa.png')} style={{borderRadius:60}}/> */}
           <Text style={styles.title}>Profile</Text>
 
           <CardItem transparent style={styles.cardItem1}>

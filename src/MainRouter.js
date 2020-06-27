@@ -8,7 +8,7 @@ import IconMaps from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './screens/Home';
 import Maps from './screens/Maps';
-import Coba from './screens/Coba';
+// import Coba from './screens/Coba';
 import ChatRoom from './screens/ChatRoom';
 
 import Splash from './screens/Splash';
@@ -127,15 +127,6 @@ class MainRouter extends Component {
               headerShown: false,
             }}
           />
-          {/* )} */}
-          <Screen
-            name="Coba"
-            component={Coba}
-            options={{
-              headerShown: true,
-            }}
-          />
-          {/* <Screen name="Dimensions" component={Dimensions} /> */}
         </Navigator>
       </NavigationContainer>
     );

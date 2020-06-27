@@ -12,22 +12,9 @@ import {
   View,
   Header,
 } from 'native-base';
-import {
-  Image,
-  // Alert,
-  // ImageBackground,
-  StyleSheet,
-  BackHandler,
-} from 'react-native';
-// import {Link} from '@react-navigation/native';
-// import ChangePassword from '../components/ChangePassword';
+import {Image, StyleSheet, BackHandler} from 'react-native';
 import EmailIcon from 'react-native-vector-icons/Fontisto';
-
-// import FooterMenu from '../components/FooterMenu'
-// import CustomHeader from '../components/CustomHeader'
 import {db} from '../utils/firebaseConfig';
-// import {connect} from 'react-redux';
-// import {logoutAction} from '../redux/actions/UserAction.js';
 import MapView, {Marker} from 'react-native-maps';
 import AsyncStorage from '@react-native-community/async-storage';
 class FriendProfile extends Component {
@@ -93,42 +80,6 @@ class FriendProfile extends Component {
         });
       });
   };
-  //   componentDidMount = async () => {
-  //     await this.getStoreData('uid');
-  //     // await this.getStoreData('role');
-  //     // await this.getStoreData('token');
-  //     // await this.getStoreData('id');
-  //     // if(this.props.email &&this.state.email!==""){
-  //     //   this.setState({email:this.props.email})
-
-  //     // }
-  //   };
-  //   logout = async () => {
-  //     Alert.alert(
-  //       'Confirmation',
-  //       'Are You Sure To Logout ?',
-  //       [
-  //         {
-  //           text: 'Cancel',
-  //           onPress: () => console.log('Cancel Pressed'),
-  //           style: 'cancel',
-  //         },
-  //         {
-  //           text: 'OK',
-  //           onPress: async () => {
-  //             await this.props.logoutUserAction();
-  //             await AsyncStorage.clear().then(response => {
-  //               Alert.alert('Thank You..');
-  //               this.props.navigation.navigate('Login');
-  //             });
-  //           },
-  //         },
-  //       ],
-  //       {
-  //         cancelable: false,
-  //       },
-  //     );
-  //   };
 
   render() {
     var user = db.auth().currentUser;
@@ -146,23 +97,11 @@ class FriendProfile extends Component {
           </Button>
           <Text style={styles.title}>Profile</Text>
         </Header>
-        {/* <CustomHeader name="Profile" props={this.props}/> */}
         <Card transparent style={styles.card}>
-          {/* <Thumbnail  source={require('../../image/nasa.png')} style={{borderRadius:60}}/> */}
-
           <CardItem transparent style={styles.cardItem1}>
             <Text style={styles.textCardTitle}>
               {this.props.route.params.item.fullName}
             </Text>
-            {/* <Text style={{position: 'absolute', color: 'white', right: 20}}>
-              Email : {this.props.route.params.item.email}
-            </Text> */}
-            {/* <Thumbnail
-                source={require('../../image/nasa.png')}
-                style={styles.thumbnail}
-              /> */}
-
-            {/* <Left style={{top:0,left:0,position:"absolute"}}> */}
             <Image
               style={styles.image}
               source={

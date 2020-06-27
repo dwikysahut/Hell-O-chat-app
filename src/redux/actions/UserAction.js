@@ -1,21 +1,7 @@
-import {
-  getUserAction,
-  logoutUserAction,
-  loginUserAction,
-  // registerUserAction,
-  // deleteUserAction,
-  // refreshTokenAction,
-  // putUserAction,
-} from './actionTypes';
+import {getUserAction, logoutUserAction, loginUserAction} from './actionTypes';
 import {db} from '../../utils/firebaseConfig';
 import {ToastAndroid} from 'react-native';
 
-// export const getUserActionCreator = token => {
-//   return {
-//     type: getUserAction,
-//     payload: allUser(token),
-//   };
-// };
 import AsyncStorage from '@react-native-community/async-storage';
 
 const storeData = async (name, value) => {
@@ -25,12 +11,6 @@ const storeData = async (name, value) => {
     // saving error
   }
 };
-// export const loginUserActionCreator = body => {
-//   return {
-//     type: loginUserAction,
-//     payload: loginAction(body),
-//   };
-// };
 export const getDataUserAction = uid => async dispatch => {
   db.database()
     .ref(`Users/${uid}`)
@@ -59,8 +39,8 @@ export const loginAction = (email, password) => async dispatch => {
                   .update({
                     status: 'Online',
                   })
-                  .then(() => {
-                    dispatch({
+                  .then(async () => {
+                    await dispatch({
                       type: loginUserAction,
                       payload: data.val(),
                     });

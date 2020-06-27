@@ -83,5 +83,6 @@ const styles = StyleSheet.create({
   yellowColor: {color: 'yellow'},
   redColor: {color: 'red'},
   greenColor: {color: 'green'},
+  hint: {marginLeft:0,borderColor:'black'}
 });
 export default styles;

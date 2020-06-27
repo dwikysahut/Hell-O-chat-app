@@ -1,23 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Text, View, Item, Input} from 'native-base';
-import {
-  Alert,
-  ImageBackground,
-  Image,
-  KeyboardAvoidingView,
-  ToastAndroid,
-} from 'react-native';
+import {Alert, ToastAndroid} from 'react-native';
 import {db} from '../utils/firebaseConfig';
 import Geolocation from '@react-native-community/geolocation';
-// import {Link} from '@react-navigation/native';
-// import { ImageBackground} from "react-native";
-// import { StyleSheet } from 'react-native';
-// import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../styles/Auth';
-// import {loginUser} from '../utils/http';
-// import {loginUserActionCreator} from '../redux/actions/UserAction.js';
-// import {connect} from 'react-redux';
-import * as firebase from 'firebase';
 
 class Register extends Component {
   state = {
@@ -225,18 +211,18 @@ class Register extends Component {
               onChange={e => this.handlerChange('email', e)}
             />
           </Item>
+        </View>
+        <Item style={styles.hint}>
           {this.state.email &&
           // eslint-disable-next-line prettier/prettier
           (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) ? (
-            <Text note style={styles.greenColor}>
-              Looks Good !!
-            </Text> // <Text style={{color: 'red'}}>Input Valid email</Text>
+            <></>
           ) : (
             <Text note style={styles.yellowColor}>
               Hint : Input valid Email ( ex : xxx@gmail.com)
             </Text>
           )}
-        </View>
+        </Item>
         {/* <Text style={{ padding: 10, paddingTop: 5 }}>Password</Text> */}
         <View style={styles.inputView}>
           <Item>

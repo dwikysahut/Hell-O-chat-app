@@ -1,19 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Text, View, Item, Input} from 'native-base';
-import {
-  Alert,
-  // ImageBackground,
-  Image,
-  // KeyboardAvoidingView,
-  ToastAndroid,
-} from 'react-native';
+import {Alert, Image, ToastAndroid} from 'react-native';
 import {db} from '../utils/firebaseConfig';
-// import {Link} from '@react-navigation/native';
-// import { ImageBackground} from "react-native";
-// import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../styles/Auth';
-// import {loginUser} from '../utils/http';
 import {loginAction} from '../redux/actions/UserAction.js';
 import {connect} from 'react-redux';
 
@@ -51,11 +41,6 @@ class Login extends Component {
   componentDidMount = () => {
     console.log(this.state.email);
   };
-  //   componentDidUpdate =(prevState)=>{
-  //       if(prevState.email !== this.state.email){
-  //         console.log(this.state.email);
-  //       }
-  //   }
   showToast = () => {
     ToastAndroid.showWithGravityAndOffset(
       'Incorrect username or Password',
@@ -110,17 +95,6 @@ class Login extends Component {
     }
 
     this.setState({isShow: true});
-    // this.setState({ isMatch: true })
-
-    // await this.props.loginUserAction({email, password});
-    // this.setState({isShow: true});
-    // await  this.storeData('role',response.data.data.role)
-    // await  this.storeData('id',response.data.data.id)
-    // await  this.storeData('id_user',response.data.data.id)
-    // await this.storeData('email',response.data.data.email)
-    // await this.storeData('refreshToken',response.data.data.refreshToken)
-    // await this.storeData('token',response.data.data.token)
-    // await this.setState({isLogin: true, show: true})
     if (this.state.validEmail && this.state.validPassword) {
       await this.props.loginAction(email, password);
       // console.log(this.getData('uid'));
@@ -128,31 +102,9 @@ class Login extends Component {
       db.auth().onAuthStateChanged(user => {
         if (user) {
           this.setState({email: '', password: ''});
-          this.props.navigation.navigate('Home');
+          this.props.navigation.navigate('Home', {uid: user.uid});
         }
       });
-      //   db.auth()
-      //     .signInWithEmailAndPassword(email, password)
-      //     .then(() => {
-      //       db.auth().onAuthStateChanged(Users => {
-      //         db.database()
-      //           .ref(`Users/${Users.uid}`)
-      //           .once('value')
-      //           .then(data => {
-      //             console.log(data.val());
-      //           });
-      //         console.log(Users.multiFactor);
-
-      //         Users ? this.storeData('uid', Users.uid) : AsyncStorage.clear();
-      //       });
-      //       this.setState({error: '', loading: false});
-      //       this.setState({email: '', password: ''});
-      //       this.getData('Users');
-      //       this.props.navigation.navigate('Home');
-      //     })
-      //     .catch(() => {
-      //       this.showToast();
-      //     });
     }
   };
   render() {
@@ -162,11 +114,7 @@ class Login extends Component {
     console.disableYellowBox = true;
 
     return (
-      <View
-        //  source={require('../../image/logo.png')}
-        style={styles.container}>
-        {/* <Container style={styles.container}> */}
-        {/* <Text style={styles.logo}>L o g i n</Text> */}
+      <View style={styles.container}>
         <Image
           source={require('../../image/logo2.png')}
           style={{width: 150, height: 150, marginBottom: 0}}
@@ -202,21 +150,19 @@ class Login extends Component {
             {/* <Icon name='close-circle' /> */}
             {/* <Icon name='checkmark-circle' /> */}
           </Item>
+        </View>
+        <Item style={styles.hint}>
           {this.state.email &&
           // eslint-disable-next-line prettier/prettier
           (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) ? (
-            <Text note style={styles.greenColor}>
-              Looks Good !!
-            </Text> // <Text style={{color: 'red'}}>Input Valid email</Text>
+            <></>
           ) : (
             <Text note style={styles.yellowColor}>
-              Input valid Email ( ex : xxx@gmail.com)
+              Hint : Input valid Email ( ex : xxx@gmail.com)
             </Text>
           )}
-        </View>
+        </Item>
 
-        {/* <Text style={{ padding: 10, paddingTop: 5 }}>Password</Text> */}
-        {/* <KeyboardAvoidingView> */}
         <View style={styles.inputView}>
           <Item>
             <Input
@@ -264,14 +210,9 @@ class Login extends Component {
             <></>
           )}
         </View>
-        {/* <Button onPress={() => navigation.navigate('Home')} dark>
-            <Text style={styles.textProfile}>Go To Home</Text>
-          </Button> */}
-        {/* <KeyboardAvoidingView> */}
         <Button style={styles.loginBtn} onPress={this.login}>
           <Text style={styles.loginText}> LOGIN </Text>
         </Button>
-        {/* </KeyboardAvoidingView> */}
         <Item>
           <Text style={styles.inputText}>Don't have an account yet? </Text>
           <Text
@@ -280,7 +221,6 @@ class Login extends Component {
             Register
           </Text>
         </Item>
-        {/* </Container> */}
       </View>
     );
   }

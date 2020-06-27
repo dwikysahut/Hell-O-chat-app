@@ -1,29 +1,15 @@
 import React, {Component} from 'react';
-// import FooterMenu from '../components/FooterMenu';
-// import { getAllBooks } from '../utils/http'
-// import UserCard from '../components/UserCard';
 
 import {
-  // SafeAreaView,
-  // ScrollView,
   View,
   FlatList,
   StyleSheet,
-  // RefreshControl,
   TouchableOpacity,
   TextInput,
   Alert,
   BackHandler,
 } from 'react-native';
-import {
-  // Item,
-  // Input,
-  // FooterTab,
-  Button,
-  Icon,
-  Text,
-  Header,
-} from 'native-base';
+import {Button, Icon, Text, Header} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Iconsend from 'react-native-vector-icons/Ionicons';
 // import {GiftedChat, Bubble, InputToolbar, Send} from 'react-native-gifted-chat';
@@ -65,20 +51,6 @@ class ChatRoom extends Component {
   componentDidMount() {
     this.loadMessage();
     console.log(this.props.route.params.item.uid);
-    // this.setState({
-    //   messages: [
-    //     {
-    //       _id: 1,
-    //       text: 'Hello developer',
-    //       createdAt: new Date(),
-    //       user: {
-    //         _id: 2,
-    //         name: 'React Native',
-    //         avatar: 'https://placeimg.com/140/140/any',
-    //       },
-    //     },
-    //   ],
-    // });
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
   onButtonPress = () => {
@@ -186,47 +158,13 @@ class ChatRoom extends Component {
       }
     }
   };
-  // onSend(messages = []) {
-  //   this.setState(previousState => ({
-  //     messages: GiftedChat.append(previousState.messages, messages),
-  //   }));
-  //   console.log(this.state.messages);
-  // }
-  // renderBubble(props) {
-  //   return (
-  //     <Bubble
-  //       {...props}
-  //       wrapperStyle={{
-  //         right: {
-  //           backgroundColor: '#2ED3C6',
-  //         },
-  //       }}
-  //     />
-  //   );
-  // }
-  // renderInputToolbar(props) {
-  //   //Add the extra styles via containerStyle
-  //   return (
-  //     <InputToolbar
-  //       {...props}
-  //       containerStyle={{
-  //         borderTopWidth: 0,
-  //         backgroundColor: 'white',
-  //         borderRadius: 20,
-  //       }}
-  //     />
-  //   );
-  // }
-  // renderSend(props) {
-  //   return <Send {...props} textStyle={{color: 'orange'}} label={'Send'} />;
-  // }
   render() {
     //   console.log(this.props.route.params)
     // const {messag}
     console.disableYellowBox = true;
     return (
       <View style={styles.container}>
-        <Header style={{backgroundColor: 'black'}}>
+        <Header style={{backgroundColor: 'black',borderColor:'white',borderBottomWidth:1}}>
           <Button
             transparent
             iconLeft
@@ -241,7 +179,7 @@ class ChatRoom extends Component {
                 this.props.route.params,
               );
             }}>
-            <Text style={{fontSize: 18, color: 'white', marginTop: 15}}>
+            <Text style={{fontSize: 18, color: 'white', marginTop: 5}}>
               {this.props.route.params.item.fullName}
             </Text>
             <Text note style={{fontSize: 10, color: 'white', marginTop: 0}}>

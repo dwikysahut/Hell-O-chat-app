@@ -18,6 +18,7 @@ class Maps extends Component {
       .ref('Users/')
       .on('value', snapshot => {
         // const currentUserId = db.auth().currentUser.uid;
+
         const allUser = Object.values(snapshot.val());
         this.setState({
           userList: allUser,
@@ -27,6 +28,7 @@ class Maps extends Component {
   render() {
     // const [marker, setMarker] = useState(null);
     const userMarker = this.state.userList.map(data => (
+      
       // console.log(data);
       // if (data.latitude && data.longitude){
       // console.log(data.longitude);
@@ -64,12 +66,6 @@ class Maps extends Component {
             longitudeDelta: 0.1421,
           }}>
           {userMarker}
-          {/* <Marker
-            coordinate={{latitude: -7.983908, longitude: 112.621391}}
-            pinColor={'purple'} // any color
-            title={'sdsad'}
-            description={'Iam Here'}
-          /> */}
         </MapView>
       </View>
     );

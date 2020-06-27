@@ -1,27 +1,9 @@
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import {StyleSheet, Image} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
 
-// import {getAllBooksActionCreator} from '../redux/actions/BookAction';
-// import {connect} from 'react-redux';
-import {
-  // SafeAreaView,
-  StyleSheet,
-  // ScrollView,
-  // View,
-  // Text,
-  // StatusBar,
-  // Button,
-  // ImageBackground,
-  Image,
-} from 'react-native';
-
-import {
-  // Header,
-  // LearnMoreLinks,
-  Colors,
-  // DebugInstructions,
-  // ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Container} from 'native-base';
 import {db} from '../utils/firebaseConfig';
 import {connect} from 'react-redux';
@@ -31,11 +13,6 @@ class Home extends Component {
     super(props);
     this.state = {
       show: 1,
-      page: 1,
-      limit: 6,
-      orderBy: '',
-      sortBy: '',
-      title: '',
       token: '',
       login: false,
     };
@@ -43,36 +20,12 @@ class Home extends Component {
     //   this.props.navigation.navigate("Login")
     // },10000);
   }
-  //   getData = async () => {
-  //     // await this.getToken();
-  //     console.log('sss ' + this.state.token);
-  //     const {page, limit, orderBy, sortBy, title} = this.state;
-  //     const pageQuery = {
-  //       page: page,
-  //       limit: limit,
-  //       orderBy: orderBy,
-  //       sortBy: sortBy,
-  //       title: title,
-  //     };
-  //     this.setState({refreshing: false});
-
-  //     // console.log(this.props.isFulfilled)
-  //     await this.props.getAllBooksAction(this.state.token, pageQuery);
-  //     this.setState({loading: false});
-  //     //  await this.setState({data: [...this.state.data,...this.props.data]})
-  //   };
   getStoreData = async name => {
     const value = await AsyncStorage.getItem(`${name}`);
     // console.log(value)
     this.setState({name: value});
     return value;
   };
-  // componentDidUpdate(prevProps){
-  //   if(prevProps.isFulfilled!==this.props.isFulfilled && this.state.login===true){
-  //     this.props.navigation.navigate('Home')
-
-  //   }
-  // }
   componentDidMount = async () => {
     // db.auth().onAuthStateChanged(user => {
     //   if (user) {
@@ -85,24 +38,34 @@ class Home extends Component {
     //     }, 2500);
     //   }
     // });
-    if (
-      (await this.props.dataUser) === '' ||
-      (await this.props.dataUser) === null ||
-      !this.props.dataUser
-    ) {
-      //   await this.getData();
+    Geolocation.getCurrentPosition(info => {
+      console.log(this.state.currentLocate);
+    });
+    if (this.props.dataUser) {
+      if (
+        this.props.dataUser.uid === '' ||
+        this.props.dataUser.uid === null ||
+        this.props.dataUser.uid === undefined
+      ) {
+        //   await this.getData();
+        this.setState({login: false});
+        setTimeout(() => {
+          this.props.navigation.navigate('Login');
+        }, 2500);
+      } else {
+        setTimeout(async () => {
+          // await this.getData();
+          this.setState({login: true});
+          // if (this.props.isFulfilled === true) {
+          this.props.navigation.navigate('Home');
+          // }
+        }, 5000);
+      }
+    } else {
       this.setState({login: false});
       setTimeout(() => {
         this.props.navigation.navigate('Login');
       }, 2500);
-    } else {
-      setTimeout(async () => {
-        // await this.getData();
-        this.setState({login: true});
-        // if (this.props.isFulfilled === true) {
-        this.props.navigation.navigate('Home');
-        // }
-      }, 5000);
     }
   };
   render() {
