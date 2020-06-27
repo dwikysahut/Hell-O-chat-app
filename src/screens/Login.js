@@ -201,11 +201,8 @@ class Login extends Component {
             />
             {/* <Icon name='close-circle' /> */}
             {/* <Icon name='checkmark-circle' /> */}
-            
           </Item>
-      
-        </View>
-        {this.state.email &&
+          {this.state.email &&
           // eslint-disable-next-line prettier/prettier
           (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) ? (
             <Text note style={styles.greenColor}>
@@ -216,6 +213,7 @@ class Login extends Component {
               Input valid Email ( ex : xxx@gmail.com)
             </Text>
           )}
+        </View>
 
         {/* <Text style={{ padding: 10, paddingTop: 5 }}>Password</Text> */}
         {/* <KeyboardAvoidingView> */}

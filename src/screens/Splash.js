@@ -86,9 +86,9 @@ class Home extends Component {
     //   }
     // });
     if (
-      (await this.props.dataUser.uid) === '' ||
-      (await this.props.dataUser.uid) === null ||
-      !this.props.dataUser.uid
+      (await this.props.dataUser) === '' ||
+      (await this.props.dataUser) === null ||
+      !this.props.dataUser
     ) {
       //   await this.getData();
       this.setState({login: false});
