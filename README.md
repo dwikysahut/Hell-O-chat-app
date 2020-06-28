@@ -50,9 +50,9 @@ paste to src/utils/firebaseConfig.js,
 3. Type `npm install` or `yarn install`
 4. Type `react-native run-android` or `yarn run android` if you use yarn
 5. [Setup firebase Config](#setup-firebase-config)
-6. Register your own account
-7. Login to use :)
-8. Happy talk!
+6. Register your account
+7. Login to use
+8. Lets Chat!
 
 note : if you want to use directly . download apk [Download APK](#release-apk)
 
