@@ -9,9 +9,7 @@
 
 //     deleteGenreAction
 
-
 // } from "../actions/actionTypes";
-
 
 // const initialValue = {
 //     data: [],
@@ -25,10 +23,7 @@
 //     errorDelete: "",
 //     selectedData:{},
 
-
 // }; // biar tidak undefined
-
-
 
 // const dataGenre = (prevState = initialValue, action) => {
 
@@ -87,8 +82,6 @@
 
 //             }
 
-
-
 //         case putGenreAction + pending:
 //             return {
 //                 ...prevState,
@@ -124,7 +117,6 @@
 
 //             }
 
-
 //         case deleteGenreAction + pending:
 //             return {
 //                 ...prevState,
@@ -155,8 +147,6 @@
 
 //             }
 
-
-
 //         case getGenreByIdAction + pending:
 //             return {
 //                 ...prevState,
@@ -179,25 +169,15 @@
 //                 isRejected: false,
 //                 isFulfilled: true,
 //                 selectedData:action.payload.data.data
-                                
-                
-
 
 //             }
-
-
 
 //         default:
 //             return {
 //                 ...prevState,
 //             };
 
-
-
-
 //     }
-
-
 
 // }
 
