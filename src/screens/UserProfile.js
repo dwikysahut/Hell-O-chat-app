@@ -356,7 +356,13 @@ const styles = StyleSheet.create({
   thumbnail: {borderRadius: 60, position: 'absolute', right: 0, top: 0},
   image: {height: 100, width: 100, borderRadius: 100, top: 0, left: 0},
   item: {marginLeft: 60},
-  textEmail: {marginTop: 30, color: 'white', marginLeft: '10%', width: '100%'},
+  textEmail: {
+    marginTop: 30,
+    color: 'white',
+    marginLeft: '10%',
+    width: '100%',
+    fontSize: 13,
+  },
   textRole: {
     fontSize: 30,
     padding: 10,
