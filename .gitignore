@@ -37,6 +37,8 @@ yarn-error.log
 
 backend.js
 firebaseConfig.js
+LoginWithReactHooks.js
+ChatRoomGiftedChat.js
 
 
 # BUCK

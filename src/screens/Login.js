@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Text, View, Item, Input} from 'native-base';
-import {Alert, Image, ToastAndroid} from 'react-native';
+import {Alert, Image, ToastAndroid, BackHandler} from 'react-native';
 import {db} from '../utils/firebaseConfig';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from '../styles/Auth';
@@ -40,6 +40,36 @@ class Login extends Component {
   };
   componentDidMount = () => {
     console.log(this.state.email);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  };
+  onButtonPress = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    // then navigate
+    this.props.navigation.goBack(null);
+  };
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+  handleBackButton = () => {
+    Alert.alert(
+      'Exit App',
+      'Exiting the application?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => BackHandler.exitApp(),
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
+    return true;
   };
   showToast = () => {
     ToastAndroid.showWithGravityAndOffset(

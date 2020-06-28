@@ -136,7 +136,6 @@ class UserProfile extends Component {
       50,
     );
   };
- 
   handleHide = () => {
     this.setState({
       show: false,

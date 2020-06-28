@@ -9,7 +9,7 @@ import {
   Alert,
   BackHandler,
 } from 'react-native';
-import {Button, Icon, Text, Header} from 'native-base';
+import {Button, Icon, Text, Header, Spinner, Container} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Iconsend from 'react-native-vector-icons/Ionicons';
 // import {GiftedChat, Bubble, InputToolbar, Send} from 'react-native-gifted-chat';
@@ -164,7 +164,12 @@ class ChatRoom extends Component {
     console.disableYellowBox = true;
     return (
       <View style={styles.container}>
-        <Header style={{backgroundColor: 'black',borderColor:'white',borderBottomWidth:1}}>
+        <Header
+          style={{
+            backgroundColor: 'black',
+            borderColor: 'white',
+            borderBottomWidth: 1,
+          }}>
           <Button
             transparent
             iconLeft
@@ -187,6 +192,9 @@ class ChatRoom extends Component {
             </Text>
           </TouchableOpacity>
         </Header>
+        {/* <Container style={styles.spinnerStyle}>
+          <Spinner color="white" />
+          </Container> */}
         <FlatList
           ref={ref => (this.flatList = ref)}
           style={styles.chatList}
@@ -219,16 +227,6 @@ class ChatRoom extends Component {
                 ]}>
                 {/* <Text style={styles.time}>{item.createdAt}</Text> */}
                 <View style={[styles.chatTemplateMessage]}>
-                  {/* {item.from === this.state.currentUserId ? (
-                    <Text style={styles.timeMessageOut}>
-                      {new Date(item.createdAt)
-                        .toLocaleTimeString()
-                        .substr(0, 5)}
-                    </Text>
-                  ) : (
-                    <></>
-                  )} */}
-
                   <Text
                     style={
                       item.from === this.state.currentUserId
@@ -352,6 +350,11 @@ const styles = StyleSheet.create({
     marginTop: 0,
     color: 'white',
     marginLeft: 20,
+  },
+  spinnerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
   },
   dateMessageOut: {
     fontSize: 9,

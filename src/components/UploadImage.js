@@ -88,25 +88,6 @@ class UploadImage extends Component {
         this.props.getDataUserAction(uidUser);
       });
   };
-  //   componentDidUpdate = async prevProps => {
-  //     console.log(this.props.title);
-  //     console.log(this.props.data);
-  //     if (prevProps.data !== this.props.data) {
-  //       await this.setState({
-  //         // id: this.props.data.id,
-  //         // title: this.props.data.title,
-  //         // description: this.props.data.description,
-  //         image: this.props.dataUser.image ? this.props.dataUser.image : '',
-  //         // genre_id: this.props.data.genre_id,
-  //         // genre_name: this.props.data.genre,
-  //         // author_name: this.props.data.author,
-
-  //         // author_id: this.props.data.author_id,
-  //         // status: this.props.data.status,
-  //         // data: response.data.data
-  //       });
-  //     }
-  //   };
 
   handleHide = () => {
     this.setState({
@@ -236,11 +217,6 @@ class UploadImage extends Component {
             </View>
           </View>
         </Modal>
-        {/* <Button
-          style={{width: '20%', marginLeft: 50}}
-          onPress={() => this.setState({show: !this.state.show})}>
-          <Text style={{padding: 10}}>Change Image</Text>
-        </Button> */}
       </>
     );
   }
