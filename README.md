@@ -36,10 +36,15 @@ this app built with React Native and  Google Firebase , Firebase Authentication 
 ## Setup Firebase Config
 if you run this app for development,Open setting in your firebase app, click general, copy your Firebase SDK snippet
 paste to src/utils/firebaseConfig.js, 
+
+
 <div align="center">
-<img width="300" src="Screen Shot 2020-06-28 at 15.27.35.png">
+<img width="300" src="./src/assets/screenshot/Screen Shot 2020-06-28 at 15.27.35.png">
 </div>
+
+
 ## Usage for development
+
 1. Download this Project 
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
