@@ -18,7 +18,7 @@
 - [Contributors](#contributor)
 
 ## Introduction
-this app built with React Native and  Google Firebase , Firebase Authentication , and Firebase Storage for save image 
+this app built with React Native and  Google Firebase , Firebase Authentication , and Firebase Storage for save image . with Hell-O chat make us know a lot of people. and with online feature , we can know toher people stay on app(online) or offline. we can find our frined location and sharing location.
 
 ## Features
 1. Users login or register if don't have account
@@ -61,6 +61,9 @@ note : if you want to use directly . download apk [Download APK](#release-apk)
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-104851_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-104916_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105012_Hell-O Chat.jpg">
+
+</div>
+<div align="center">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105033_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105043_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105904_Hell-O Chat.jpg">
