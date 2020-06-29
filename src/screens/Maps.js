@@ -20,7 +20,6 @@ class Maps extends Component {
       .ref('Users/')
       .on('value', snapshot => {
         // const currentUserId = db.auth().currentUser.uid;
-
         const allUser = Object.values(snapshot.val());
         this.setState({
           userList: allUser,
@@ -30,7 +29,6 @@ class Maps extends Component {
   render() {
     // const [marker, setMarker] = useState(null);
     const userMarker = this.state.userList.map(data => (
-      
       // console.log(data);
       // if (data.latitude && data.longitude){
       // console.log(data.longitude);

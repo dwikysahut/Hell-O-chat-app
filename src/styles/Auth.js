@@ -53,6 +53,10 @@ const styles = StyleSheet.create({
 
     color: 'white',
   },
+  backToLogin: {
+    marginTop:40,
+    borderColor:'transparent',
+  },
 
   loginBtn: {
     width: '80%',
@@ -80,9 +84,14 @@ const styles = StyleSheet.create({
     color: 'orange',
     fontWeight: 'bold',
   },
+  forgotText: {
+    height: 50,
+    color: 'yellow',
+    fontWeight: 'bold',
+  },
   yellowColor: {color: 'yellow'},
   redColor: {color: 'red'},
   greenColor: {color: 'green'},
-  hint: {marginLeft:0,borderColor:'black'}
+  hint: {marginLeft: 0, borderColor: 'black'},
 });
 export default styles;

@@ -40,7 +40,7 @@ class Login extends Component {
   };
   componentDidMount = () => {
     console.log(this.state.email);
-     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   };
   onButtonPress = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -251,6 +251,11 @@ class Login extends Component {
             Register
           </Text>
         </Item>
+        <Text
+            style={styles.forgotText}
+            onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+            Forgot Password ?
+          </Text>
       </View>
     );
   }

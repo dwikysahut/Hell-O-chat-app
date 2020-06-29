@@ -184,7 +184,6 @@ class Register extends Component {
       <View
         //  source={require('../../image/logo.png')}
         style={styles.container}>
-
         <Text style={styles.title}>Welcome</Text>
         <View style={styles.inputView}>
           <Item>

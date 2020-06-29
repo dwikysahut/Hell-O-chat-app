@@ -13,11 +13,11 @@ import {
   View,
   Input,
   // Form,
-  // Label,
+  Spinner,
 } from 'native-base';
-import Pencil from 'react-native-vector-icons/FontAwesome';
+import Pencil from 'react-native-vector-icons/Feather';
 import EmailIcon from 'react-native-vector-icons/Fontisto';
-
+import LockIcon from 'react-native-vector-icons/AntDesign';
 import {
   Image,
   Alert,
@@ -45,6 +45,7 @@ class UserProfile extends Component {
       users: {},
       show: false,
       isEdit: false,
+      isLoading: false,
       fullName: this.props.dataUser.fullName
         ? this.props.dataUser.fullName
         : '',
@@ -112,6 +113,7 @@ class UserProfile extends Component {
     // this.getUserData();
   };
   handleEditNameUser = () => {
+    this.setState({isLoading: true});
     if (this.state.fullName !== '') {
       db.database()
         .ref('Users/' + this.props.dataUser.uid)
@@ -120,7 +122,7 @@ class UserProfile extends Component {
         })
         .then(() => {
           this.props.getDataUserAction(this.props.dataUser.uid);
-          this.setState({isEdit: false});
+          this.setState({isEdit: false, isLoading: false});
           // this.props.navigation.navigate('UserProfile');
         });
     } else {
@@ -191,10 +193,16 @@ class UserProfile extends Component {
                   right: 0,
                   top: 0,
                   height: 40,
-                  backgroundColor: 'orange',
+                  backgroundColor: this.state.isLoading ? 'black' : 'orange',
                 }}
                 onPress={this.handleEditNameUser}>
-                <Text> Ok </Text>
+                {this.state.isLoading ? (
+                  <View>
+                    <Spinner color="white" />
+                  </View>
+                ) : (
+                  <Text> Ok </Text>
+                )}
               </Button>
             ) : (
               <></>
@@ -226,9 +234,9 @@ class UserProfile extends Component {
               />
             </TouchableOpacity>
             <Pencil
-              style={{position: 'absolute', left: 100, top: 85}}
+              style={{position: 'absolute', left: 100, top: 90}}
               size={20}
-              name="pencil"
+              name="edit"
               color="white"
             />
             {/* </Left> */}
@@ -261,7 +269,7 @@ class UserProfile extends Component {
                   <Pencil
                     style={{marginLeft: 10}}
                     size={20}
-                    name="pencil"
+                    name="edit"
                     color="white"
                   />
                   <Text style={styles.white}>Change Name</Text>
@@ -351,6 +359,11 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: 'black',
     marginLeft: '20%',
+  },
+  changePasswordStyle: {
+    marginLeft: 25,
+    marginTop: 20,
+    borderColor: 'transparent',
   },
   buttonUser: {backgroundColor: '#ff8c00', borderRadius: 5},
   iconUser: {color: 'white', marginLeft: 10},

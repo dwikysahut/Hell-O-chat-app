@@ -7,6 +7,8 @@ import {Icon} from 'native-base';
 import IconMaps from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './screens/Home';
+import ForgotPassword from './screens/ForgotPassword';
+
 import Maps from './screens/Maps';
 // import Coba from './screens/Coba';
 import ChatRoom from './screens/ChatRoom';
@@ -123,6 +125,13 @@ class MainRouter extends Component {
           <Screen
             name="ChatRoom"
             component={ChatRoom}
+            options={{
+              headerShown: false,
+            }}
+          />
+           <Screen
+            name="ForgotPassword"
+            component={ForgotPassword}
             options={{
               headerShown: false,
             }}

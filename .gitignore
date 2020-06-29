@@ -39,7 +39,10 @@ backend.js
 firebaseConfig.js
 LoginWithReactHooks.js
 ChatRoomGiftedChat.js
-
+reducerGenre.js
+reducerBooks.js
+reducerBorrow.js
+reducerAuthor.js
 
 # BUCK
 buck-out/
