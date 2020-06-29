@@ -11,27 +11,14 @@ import {
   // KeyboardAvoidingView,
   //   Platform,
 } from 'react-native';
-import Pencil from 'react-native-vector-icons/FontAwesome';
+// import Pencil from 'react-native-vector-icons/FontAwesome';
 import ImageIcon from 'react-native-vector-icons/Entypo';
-import {
-  Picker,
-  Textarea,
-  Content,
-  Item,
-  Input,
-  Form,
-  Label,
-  Button,
-  Fab,
-  Icon,
-  Spinner,
-} from 'native-base';
+import {Item, Form, Button, Spinner} from 'native-base';
 
 import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
 import {db} from '../utils/firebaseConfig';
 import {getDataUserAction} from '../redux/actions/UserAction';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class UploadImage extends Component {
   state = {

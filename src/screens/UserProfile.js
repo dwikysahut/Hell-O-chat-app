@@ -46,6 +46,7 @@ class UserProfile extends Component {
       show: false,
       isEdit: false,
       isLoading: false,
+      isLoadingLogout: false,
       fullName: this.props.dataUser.fullName
         ? this.props.dataUser.fullName
         : '',
@@ -76,6 +77,7 @@ class UserProfile extends Component {
         {
           text: 'OK',
           onPress: async () => {
+            this.setState({isLoadingLogout: true});
             db.database()
               .ref(`Users/${this.props.dataUser.uid}`)
               .update({
@@ -113,8 +115,8 @@ class UserProfile extends Component {
     // this.getUserData();
   };
   handleEditNameUser = () => {
-    this.setState({isLoading: true});
     if (this.state.fullName !== '') {
+      this.setState({isLoading: true});
       db.database()
         .ref('Users/' + this.props.dataUser.uid)
         .update({
@@ -172,14 +174,7 @@ class UserProfile extends Component {
               }}
             />
             {this.state.isEdit ? (
-              <Text
-                note
-                style={{
-                  color: 'white',
-                  position: 'absolute',
-                  left: 240,
-                  top: 40,
-                }}>
+              <Text note style={styles.inputEdit}>
                 {this.state.fullName.length}/16 characters
               </Text>
             ) : (
@@ -188,13 +183,11 @@ class UserProfile extends Component {
 
             {this.state.isEdit ? (
               <Button
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  top: 0,
-                  height: 40,
-                  backgroundColor: this.state.isLoading ? 'black' : 'orange',
-                }}
+                style={
+                  this.state.isLoading
+                    ? styles.editOkBlack
+                    : styles.editOkOrange
+                }
                 onPress={this.handleEditNameUser}>
                 {this.state.isLoading ? (
                   <View>
@@ -207,16 +200,6 @@ class UserProfile extends Component {
             ) : (
               <></>
             )}
-            {/* <Text style={styles.textCardTitle}>
-              {this.props.dataUser.fullName}
-            </Text> */}
-
-            {/* <Thumbnail
-                source={require('../../image/nasa.png')}
-                style={styles.thumbnail}
-              /> */}
-
-            {/* <Left style={{top:0,left:0,position:"absolute"}}> */}
             <TouchableOpacity
               onPress={() => {
                 this.setState({show: true});
@@ -280,24 +263,21 @@ class UserProfile extends Component {
             )}
 
             <Right>
-              <Button style={styles.buttonLogout} onPress={this.logout}>
-                <Thumbnail small source={require('../../image/logout.png')} />
-                <Text style={styles.black}>Logout</Text>
-              </Button>
+              {this.state.isLoadingLogout ? (
+                <View>
+                  <Spinner color="white" />
+                </View>
+              ) : (
+                <Button style={styles.buttonLogout} onPress={this.logout}>
+                  <Thumbnail small source={require('../../image/logout.png')} />
+                  <Text style={styles.black}>Logout</Text>
+                </Button>
+              )}
             </Right>
           </CardItem>
         </Card>
         <UploadImage show={this.state.show} handleHide={this.handleHide} />
-        <View>
-          {/* <Footer >
-         {this.props.route.params.role==1?
-           <FooterMenu role="1"  type="profile"  props={this.props}/>
-             :
-             <FooterMenu role="2" type="profile"  props={this.props}/>
-
-         }
-      </Footer> */}
-        </View>
+        <View />
       </Container>
     );
   }
@@ -313,6 +293,12 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 25,
     resizeMode: 'cover',
+  },
+  inputEdit: {
+    color: 'white',
+    position: 'absolute',
+    left: 240,
+    top: 40,
   },
   title: {
     fontSize: 30,
@@ -333,6 +319,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
+  },
+  editOkOrange: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    height: 40,
+    backgroundColor: 'orange',
+  },
+  editOkBlack: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    height: 40,
+    backgroundColor: 'black',
   },
   textCardTitle: {
     fontSize: 20,

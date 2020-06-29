@@ -69,7 +69,6 @@ class Register extends Component {
     );
   };
   register = () => {
-    this.setState({isLoading: true});
     if (this.state.email) {
       if (
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)
@@ -110,15 +109,8 @@ class Register extends Component {
     }
 
     if (this.state.isEmpty === false && this.state.password.length > 4) {
-      // this.setState({ isSuccess: true })
-      // console.log(this.state);
-      // e.preventDefault()
-      // const {email, password, role} = this.state;
-
-      // this.setState({error: '', loading: true});
+      this.setState({isLoading: true});
       const {email, password, fullName} = this.state;
-      // console.log(db);
-      // try {
       db.auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(data => {
@@ -155,6 +147,7 @@ class Register extends Component {
             password: '',
             password2: '',
             fullName: '',
+            isLoading: false,
           });
         })
         .catch(error => {
@@ -242,13 +235,15 @@ class Register extends Component {
               onChange={e => this.handlerChange('password', e)}
             />
           </Item>
-          {this.state.password && this.state.password.length <= 4 ? (
-            <Text note style={styles.redColor}>
-              Password must 5-16 character
-            </Text>
-          ) : (
-            <></>
-          )}
+          <Item style={styles.hint}>
+            {this.state.password && this.state.password.length <= 4 ? (
+              <Text note style={styles.redColor}>
+                Password must 5-16 character
+              </Text>
+            ) : (
+              <></>
+            )}
+          </Item>
         </View>
 
         {/* <Text style={{ padding: 10, paddingTop: 5 }}>Re-Enter Password</Text> */}

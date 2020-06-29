@@ -58,7 +58,7 @@ note : if you want to use directly . download apk [Download APK](#release-apk)
 
 ## Screenshots
 <div align="center">
-  <img width="150" src="./src/assets/screenshot/Screenshot_20200628-104851_Hell-O Chat.jpg">
+  <img width="150" src="./src/assets/screenshot/Screenshot_20200629-211416_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-104916_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105012_Hell-O Chat.jpg">
 
@@ -67,6 +67,7 @@ note : if you want to use directly . download apk [Download APK](#release-apk)
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105033_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105043_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105904_Hell-O Chat.jpg">
+  <img width="150" src="./src/assets/screenshot/Screenshot_20200629-211514_Hell-O Chat.jpg">
 
 </div>
 

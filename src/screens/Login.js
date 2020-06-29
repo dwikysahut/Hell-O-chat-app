@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Text, View, Item, Input} from 'native-base';
+import {Button, Text, View, Item, Input, Spinner} from 'native-base';
 import {Alert, Image, ToastAndroid, BackHandler} from 'react-native';
 import {db} from '../utils/firebaseConfig';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -20,6 +20,7 @@ class Login extends Component {
     isEmptyPassword: true,
     isMatch: false,
     isShow: false,
+    isLoading: false,
   };
   storeData = async (name, value) => {
     try {
@@ -83,22 +84,6 @@ class Login extends Component {
 
   login = async () => {
     const {email, password} = this.state;
-    // db.auth()
-    //   .signInWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     db.auth().onAuthStateChanged(Users => {
-    //       db.database()
-    //         .ref(`users/${Users.uid}`)
-    //         .once('value')
-    //         .then(data => {
-    //           console.log(data.val());
-    //         });
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     Alert.alert('Wrong Email Or Password');
-    //   });
     if (this.state.email === '') {
       Alert.alert('Caution', 'email Cannot Empty!!');
       this.setState({isEmptyEmail: true});
@@ -126,12 +111,14 @@ class Login extends Component {
 
     this.setState({isShow: true});
     if (this.state.validEmail && this.state.validPassword) {
+      this.setState({isLoading: true});
+
       await this.props.loginAction(email, password);
       // console.log(this.getData('uid'));
 
       db.auth().onAuthStateChanged(user => {
         if (user) {
-          this.setState({email: '', password: ''});
+          this.setState({email: '', password: '', isLoading: false});
           this.props.navigation.navigate('Home', {uid: user.uid});
         }
       });
@@ -240,9 +227,15 @@ class Login extends Component {
             <></>
           )}
         </View>
-        <Button style={styles.loginBtn} onPress={this.login}>
-          <Text style={styles.loginText}> LOGIN </Text>
-        </Button>
+        {this.state.isLoading ? (
+          <View>
+            <Spinner color="white" />
+          </View>
+        ) : (
+          <Button style={styles.loginBtn} onPress={this.login}>
+            <Text style={styles.loginText}> LOGIN </Text>
+          </Button>
+        )}
         <Item>
           <Text style={styles.inputText}>Don't have an account yet? </Text>
           <Text
@@ -252,10 +245,10 @@ class Login extends Component {
           </Text>
         </Item>
         <Text
-            style={styles.forgotText}
-            onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-            Forgot Password ?
-          </Text>
+          style={styles.forgotText}
+          onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+          Forgot Password ?
+        </Text>
       </View>
     );
   }
