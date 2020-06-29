@@ -3,6 +3,7 @@ import {View, StyleSheet, Image} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {db} from '../utils/firebaseConfig';
 import {connect} from 'react-redux';
+import Geolocation from '@react-native-community/geolocation';
 
 class Maps extends Component {
   state = {
@@ -14,6 +15,7 @@ class Maps extends Component {
     ],
   };
   componentDidMount = () => {
+    Geolocation.watchPosition(info => console.log(info));
     db.database()
       .ref('Users/')
       .on('value', snapshot => {

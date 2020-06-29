@@ -27,46 +27,46 @@ class Home extends Component {
     return value;
   };
   componentDidMount = async () => {
-    // db.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //     setTimeout(() => {
-    //       this.props.navigation.navigate('Home');
-    //     }, 2500);
-    //   } else {
-    //     setTimeout(() => {
-    //       this.props.navigation.navigate('Login');
-    //     }, 2500);
-    //   }
-    // });
     Geolocation.getCurrentPosition(info => {
       console.log(this.state.currentLocate);
     });
-    if (this.props.dataUser) {
-      if (
-        this.props.dataUser.uid === '' ||
-        this.props.dataUser.uid === null ||
-        this.props.dataUser.uid === undefined
-      ) {
-        //   await this.getData();
-        this.setState({login: false});
+    db.auth().onAuthStateChanged(user => {
+      if (user) {
+        setTimeout(() => {
+          this.props.navigation.navigate('Home');
+        }, 2500);
+      } else {
         setTimeout(() => {
           this.props.navigation.navigate('Login');
         }, 2500);
-      } else {
-        setTimeout(async () => {
-          // await this.getData();
-          this.setState({login: true});
-          // if (this.props.isFulfilled === true) {
-          this.props.navigation.navigate('Home');
-          // }
-        }, 5000);
       }
-    } else {
-      this.setState({login: false});
-      setTimeout(() => {
-        this.props.navigation.navigate('Login');
-      }, 2500);
-    }
+    });
+    // if (this.props.dataUser) {
+    //   if (
+    //     this.props.dataUser.uid === '' ||
+    //     this.props.dataUser.uid === null ||
+    //     this.props.dataUser.uid === undefined
+    //   ) {
+    //     //   await this.getData();
+    //     this.setState({login: false});
+    //     setTimeout(() => {
+    //       this.props.navigation.navigate('Login');
+    //     }, 2500);
+    //   } else {
+    //     setTimeout(async () => {
+    //       // await this.getData();
+    //       this.setState({login: true});
+    //       // if (this.props.isFulfilled === true) {
+    //       this.props.navigation.navigate('Home');
+    //       // }
+    //     }, 5000);
+    //   }
+    // } else {
+    //   this.setState({login: false});
+    //   setTimeout(() => {
+    //     this.props.navigation.navigate('Login');
+    //   }, 2500);
+    // }
   };
   render() {
     return (
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({reducerUser}) => {
   return {
     dataUser: reducerUser.dataUser,
+    isLogin: reducerUser.isLogin
   };
 };
 

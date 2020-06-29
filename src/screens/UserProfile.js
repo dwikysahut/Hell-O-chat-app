@@ -269,23 +269,6 @@ class UserProfile extends Component {
               </Left>
             ) : (
               <></>
-              // <Left>
-              //   <Button
-              //     style={styles.buttonUser}
-              //     onPress={() =>{
-              //       this.setState({
-              //         isEdit: !this.state.isEdit,
-              //         fullName: this.props.dataUser.fullName,
-              //       });
-              //       this.props.getDataUserAction(this.props.dataUser.uid);
-              //     }
-              //     }>
-              //     <Icon style={styles.iconUser} name="person" />
-              //     <Text style={styles.white}>
-              //       Cancel
-              //     </Text>
-              //   </Button>
-              // </Left>
             )}
 
             <Right>

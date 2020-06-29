@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {Button, Text, View, Item, Input} from 'native-base';
+import {Button, Text, View, Item, Input, Spinner} from 'native-base';
 import {Alert, ToastAndroid} from 'react-native';
 import {db} from '../utils/firebaseConfig';
 import Geolocation from '@react-native-community/geolocation';
 import styles from '../styles/Auth';
+import {loginAction} from '../redux/actions/UserAction.js';
+import {connect} from 'react-redux';
 
 class Register extends Component {
   state = {
@@ -22,6 +24,7 @@ class Register extends Component {
     emailExist: '',
     currentLocate: {},
     showCustomToast: false,
+    isLoading: false,
   };
   handlerChange = (name, e) => {
     //  console.log(e.nativeEvent.text)
@@ -66,6 +69,7 @@ class Register extends Component {
     );
   };
   register = () => {
+    this.setState({isLoading: true});
     if (this.state.email) {
       if (
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)
@@ -126,11 +130,21 @@ class Register extends Component {
               fullName,
               latitude: this.state.currentLocate.latitude,
               longitude: this.state.currentLocate.longitude,
+              status: 'Offline',
             })
-            .then(data => {
+            .then(async data => {
               console.log(data);
               //success callback
               Alert.alert('Register Successfully');
+              await this.props.loginAction(email, password);
+              // console.log(this.getData('uid'));
+
+              db.auth().onAuthStateChanged(user => {
+                if (user) {
+                  this.setState({email: '', password: '', isLoading: false});
+                  this.props.navigation.navigate('Home', {uid: user.uid});
+                }
+              });
             })
             .catch(error => {
               //error callback
@@ -142,7 +156,6 @@ class Register extends Component {
             password2: '',
             fullName: '',
           });
-          this.props.navigation.navigate('Login');
         })
         .catch(error => {
           switch (error.code) {
@@ -171,12 +184,7 @@ class Register extends Component {
       <View
         //  source={require('../../image/logo.png')}
         style={styles.container}>
-        {/* <Container style={styles.container}> */}
-        {/* <Text style={styles.logo}>L o g i n</Text> */}
-        {/* <Image
-          source={require('../../image/logo2.png')}
-          style={{width: 150, height: 150}}
-        /> */}
+
         <Text style={styles.title}>Welcome</Text>
         <View style={styles.inputView}>
           <Item>
@@ -282,27 +290,15 @@ class Register extends Component {
             <></>
           )}
         </View>
-        {/* <Text style={{ padding: 10, paddingTop: 5 }}>Role</Text> */}
-        {/* <View style={styles.inputView} >
-                    <Item picker>
-                        <Picker
-                            mode="dropdown"
-                            // iosIcon={<Icon name="arrow-down" />}
-                            style={{ width: undefined }}
-                            name="role"
-                            placeholderStyle={{ color: "#bfc6ea" }}
-                            placeholderIconColor="#007aff"
-                            selectedValue={this.state.role}
-                            onValueChange={(e) => this.handlerChange('role', e)}
-                        >
-                            <Picker.Item label="User" value="2" />
-                        </Picker>
-                    </Item>
-                </View> */}
-
-        <Button style={styles.loginBtn} onPress={this.register}>
-          <Text style={styles.loginText}> SIGN UP </Text>
-        </Button>
+        {this.state.isLoading ? (
+          <View>
+            <Spinner color="white" />
+          </View>
+        ) : (
+          <Button style={styles.loginBtn} onPress={this.register}>
+            <Text style={styles.loginText}> SIGN UP </Text>
+          </Button>
+        )}
 
         {/* </KeyboardAvoidingView> */}
         <Item>
@@ -318,5 +314,12 @@ class Register extends Component {
     );
   }
 }
+const mapDispatchToProps = {
+  loginAction,
+};
+// export default Login;
 
-export default Register;
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Register);

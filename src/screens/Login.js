@@ -40,7 +40,7 @@ class Login extends Component {
   };
   componentDidMount = () => {
     console.log(this.state.email);
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   };
   onButtonPress = () => {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
