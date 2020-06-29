@@ -91,17 +91,17 @@ class Register extends Component {
     }
     if (this.state.password.length < 4 || this.state.password.length > 16) {
       // return false
-      Alert.alert('Caution', 'The password must be 5-16 characters');
+      this.showCustomToast('The password must contain 5-16 characters');
       return false;
     }
     if (!this.state.password || this.state.password === '') {
-      Alert.alert('password Cannot Empty');
+      this.showCustomToast('The password must be filled in');
       this.setState({isEmptyPassword: true});
       return;
     }
 
     if (this.state.password2 !== this.state.password) {
-      Alert.alert('Caution', "password and Re-Enter Password Doesn't Match");
+      this.showCustomToast("password and Re-Enter Password Doesn't Match");
       this.setState({isMatch: false});
       return false;
     } else {
@@ -125,7 +125,7 @@ class Register extends Component {
               status: 'Offline',
             })
             .then(async data => {
-              console.log(data);
+              // console.log(data);
               //success callback
               Alert.alert('Register Successfully');
               await this.props.loginAction(email, password);

@@ -81,26 +81,36 @@ class Login extends Component {
       50,
     );
   };
+  showToastMessage = text => {
+    ToastAndroid.showWithGravityAndOffset(
+      text,
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+      25,
+      50,
+    );
+  };
 
   login = async () => {
     const {email, password} = this.state;
     if (this.state.email === '') {
-      Alert.alert('Caution', 'email Cannot Empty!!');
+      // Alert.alert('Caution', 'email Cannot Empty!!');
+      this.showToastMessage('email Cannot Empty!!');
       this.setState({isEmptyEmail: true});
       return;
     }
     if (!this.state.validEmail) {
-      Alert.alert('Email Not Valid');
+      this.showToastMessage('Invalid email');
       this.setState({isEmptyPassword: true});
       return;
     }
     if (this.state.password === '') {
-      Alert.alert('password Cannot Empty');
+      this.showToastMessage('The password must be filled in');
       this.setState({isEmptyPassword: true});
       return;
     }
     if (this.state.validPassword === false) {
-      Alert.alert('password must 5-16 characters');
+      this.showToastMessage('The password must contain 5-16 characters');
     } else {
       if (this.props.isRejected === false) {
         // Alert.alert('berhasil')

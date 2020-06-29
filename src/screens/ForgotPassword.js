@@ -44,9 +44,9 @@ class Login extends Component {
   handleBackButton = () => {
     this.onButtonPress();
   };
-  showToast = () => {
+  showToast = text => {
     ToastAndroid.showWithGravityAndOffset(
-      'Your email is not registered',
+      text,
       ToastAndroid.LONG,
       ToastAndroid.TOP,
       25,
@@ -54,6 +54,10 @@ class Login extends Component {
     );
   };
   forgotPassword = () => {
+    if (this.state.email === '') {
+      this.showToast('Please Fill in the Email');
+      return;
+    }
     db.auth()
       .sendPasswordResetEmail(this.state.email)
       .then(user => {
@@ -61,7 +65,7 @@ class Login extends Component {
         this.props.navigation.navigate('Login');
       })
       .catch(e => {
-        this.showToast();
+        this.showToast('Your email is not registered ');
       });
   };
   render() {
