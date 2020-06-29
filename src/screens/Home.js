@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   flatlistStyle: {backgroundColor: 'black', marginBottom: 10},
-  fabGoTop: {backgroundColor: 'black', marginBottom: 60},
+  fabGoTop: {backgroundColor: 'orange', marginBottom: 0},
   bgColor: {backgroundColor: 'black'},
   whiteColor: {color: 'white'},
   item: {

@@ -12,6 +12,7 @@ import {
   //   Platform,
 } from 'react-native';
 import Pencil from 'react-native-vector-icons/FontAwesome';
+import ImageIcon from 'react-native-vector-icons/Entypo';
 import {
   Picker,
   Textarea,
@@ -23,12 +24,14 @@ import {
   Button,
   Fab,
   Icon,
+  Spinner,
 } from 'native-base';
 
 import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
 import {db} from '../utils/firebaseConfig';
 import {getDataUserAction} from '../redux/actions/UserAction';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class UploadImage extends Component {
   state = {
@@ -43,6 +46,7 @@ class UploadImage extends Component {
     isFill: true,
     photo: '',
     active: false,
+    isLoading: false,
     displayName: this.props.dataUser.fullName,
   };
 
@@ -137,6 +141,7 @@ class UploadImage extends Component {
     });
   };
   handlerSubmit = async e => {
+    this.setState({isLoading: true});
     // const {image} = this.state;
     const fileImage = await this.uriToBlob(this.state.image.uri);
     db.storage()
@@ -158,6 +163,7 @@ class UploadImage extends Component {
           .set(imageUrl)
           .then(() => {
             this.props.getDataUserAction(uidUser);
+            this.setState({isLoading: false});
           });
         // this.updateFirebaseUser(imageUrl);
         this.props.handleHide();
@@ -201,14 +207,21 @@ class UploadImage extends Component {
                   bordered
                   style={styles.buttonImage}
                   onPress={this.openUpload}>
-                  <Text>Choose Image</Text>
+                  <Text>Choose</Text>
+                  <ImageIcon size={25} name="folder-images" color="black" />
                 </Button>
               </Form>
-              <TouchableHighlight
-                style={styles.touchableStyle}
-                onPress={e => this.handlerSubmit(e)}>
-                <Text style={styles.textChange}>Change</Text>
-              </TouchableHighlight>
+              {this.state.isLoading ? (
+                <View>
+                  <Spinner color="black" />
+                </View>
+              ) : (
+                <TouchableHighlight
+                  style={styles.touchableStyle}
+                  onPress={e => this.handlerSubmit(e)}>
+                  <Text style={styles.textChange}>Change</Text>
+                </TouchableHighlight>
+              )}
               <TouchableHighlight
                 style={{marginTop: 20}}
                 onPress={e => this.props.handleHide()}>

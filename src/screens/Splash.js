@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({reducerUser}) => {
   return {
     dataUser: reducerUser.dataUser,
-    isLogin: reducerUser.isLogin
+    isLogin: reducerUser.isLogin,
   };
 };
 
