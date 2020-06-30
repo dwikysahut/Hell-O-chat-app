@@ -68,20 +68,20 @@ paste to src/utils/firebaseConfig.js,
 ## Screenshots
 <div align="center">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200629-211416_Hell-O Chat.jpg">
-  <img width="150" src="./src/assets/screenshot/Screenshot_20200628-104916_Hell-O Chat.jpg">
+  <img width="150" src="./src/assets/screenshot/Screenshot_20200630-114809_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105012_Hell-O Chat.jpg">
 
 </div>
 <div align="center">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105033_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105043_Hell-O Chat.jpg">
-  <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105904_Hell-O Chat.jpg">
+  <img width="150" src="./src/assets/screenshot/Screenshot_20200630-112850_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200629-211514_Hell-O Chat.jpg">
 
 </div>
 
 ## Release APK
-<a href="https://drive.google.com/file/d/1_IXncRH1wJJzFiIeW3vSuzsU5sXoUK1t/view?usp=sharing">
+<a href="https://drive.google.com/file/d/1YqAIfSCUkXewbln-CFBukvzfRdtfmrPg/view?usp=sharing">
   <img src="https://img.shields.io/badge/Download%20on%20the-Google%20Drive-blue.svg?style=popout&logo=google-drive"/>
 </a>
 
