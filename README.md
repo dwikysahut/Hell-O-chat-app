@@ -29,10 +29,9 @@ this app built with React Native and  Google Firebase , Firebase Authentication 
 
 ## Requirements
 
-1. <a href="https://nodejs.org/en/download/">Node Js</a>
-2. Node_modules `npm install` or `yarn install`
-3. [`react-native`](https://facebook.github.io/react-native/docs/getting-started)
-4. `Google maps API Key` you can get it [here](https://developers.google.com/maps/documentation/javascript/get-api-key)
+1. Node_modules `npm install` or `yarn install`
+2. [`react-native`](https://facebook.github.io/react-native/docs/getting-started)
+3. `Google maps API Key` you can get it [here](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 ## Setup Firebase Config
 if you run this app for development,Open setting in your firebase app, click general, copy your Firebase SDK snippet
