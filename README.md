@@ -40,7 +40,7 @@ paste to src/utils/firebaseConfig.js,
 
 
 <div align="center">
-<img width="300" src="./src/assets/screenshot/Screen Shot 2020-06-28 at 15.27.35.png">
+<img width="300" height="200" src="./src/assets/screenshot/Screen Shot 2020-06-28 at 15.27.35.png">
 </div>
 
 
