@@ -123,8 +123,9 @@ class Register extends Component {
               latitude: this.state.currentLocate.latitude,
               longitude: this.state.currentLocate.longitude,
               status: 'Offline',
+              bio: 'Hello, Nice to meet you',
             })
-            .then(async data => {
+            .then(async item => {
               // console.log(data);
               //success callback
               Alert.alert('Register Successfully');

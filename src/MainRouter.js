@@ -18,7 +18,7 @@ import Splash from './screens/Splash';
 import UserProfile from './screens/UserProfile';
 import FriendProfile from './screens/FriendProfile';
 
-import {AppState, StyleSheet, Text, View} from 'react-native';
+import {AppState, StyleSheet} from 'react-native';
 
 import Login from './screens/Login';
 import Register from './screens/Register';
@@ -129,7 +129,7 @@ class MainRouter extends Component {
               headerShown: false,
             }}
           />
-           <Screen
+          <Screen
             name="ForgotPassword"
             component={ForgotPassword}
             options={{

@@ -12,12 +12,13 @@ import {
   Item,
   View,
   Input,
-  // Form,
+  Form,
+  Textarea,
   Spinner,
 } from 'native-base';
 import Pencil from 'react-native-vector-icons/Feather';
 import EmailIcon from 'react-native-vector-icons/Fontisto';
-import LockIcon from 'react-native-vector-icons/AntDesign';
+// import LockIcon from 'react-native-vector-icons/AntDesign';
 import {
   Image,
   Alert,
@@ -33,6 +34,7 @@ import {connect} from 'react-redux';
 import {logoutAction, getDataUserAction} from '../redux/actions/UserAction.js';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import {color} from 'react-native-reanimated';
 class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +52,7 @@ class UserProfile extends Component {
       fullName: this.props.dataUser.fullName
         ? this.props.dataUser.fullName
         : '',
+      bio: this.props.dataUser.bio ? this.props.dataUser.bio : '',
     };
   }
   getStoreData = async name => {
@@ -93,6 +96,7 @@ class UserProfile extends Component {
                 .signOut()
                 .then(() => {
                   console.log('logout');
+                  this.setState({isLoadingLogout: false});
                   this.props.navigation.navigate('Login');
                 })
                 .catch(function(error) {
@@ -121,6 +125,7 @@ class UserProfile extends Component {
         .ref('Users/' + this.props.dataUser.uid)
         .update({
           fullName: this.state.fullName,
+          bio: this.state.bio,
         })
         .then(() => {
           this.props.getDataUserAction(this.props.dataUser.uid);
@@ -181,25 +186,6 @@ class UserProfile extends Component {
               <></>
             )}
 
-            {this.state.isEdit ? (
-              <Button
-                style={
-                  this.state.isLoading
-                    ? styles.editOkBlack
-                    : styles.editOkOrange
-                }
-                onPress={this.handleEditNameUser}>
-                {this.state.isLoading ? (
-                  <View>
-                    <Spinner color="white" />
-                  </View>
-                ) : (
-                  <Text> Ok </Text>
-                )}
-              </Button>
-            ) : (
-              <></>
-            )}
             <TouchableOpacity
               onPress={() => {
                 this.setState({show: true});
@@ -238,6 +224,35 @@ class UserProfile extends Component {
               </Item>
             </Right>
           </CardItem>
+          <Form>
+            <Textarea
+              disabled={this.state.isEdit ? false : true}
+              rowSpan={4}
+              maxLength={32}
+              bordered
+              placeholder="Textarea"
+              defaultValue={
+                this.props.dataUser.bio
+                  ? this.props.dataUser.bio
+                  : 'hello nice to meet you'
+              }
+              style={{
+                color: this.state.isEdit ? 'black' : 'white',
+                backgroundColor: this.state.isEdit ? 'white' : 'black',
+              }}
+              onChangeText={e => {
+                this.setState({bio: e});
+              }}
+              // color="white"
+            />
+          </Form>
+          {this.state.isEdit ? (
+            <Text note style={{color: 'white'}}>
+              {this.state.bio.length}/32 characters
+            </Text>
+          ) : (
+            <></>
+          )}
           {/* <Text style={styles.textEmail}> {this.props.dataUser.status} </Text> */}
           <CardItem transparent style={styles.cardItem2}>
             {!this.state.isEdit ? (
@@ -255,11 +270,25 @@ class UserProfile extends Component {
                     name="edit"
                     color="white"
                   />
-                  <Text style={styles.white}>Change Name</Text>
+                  <Text style={styles.white}>Change Profile</Text>
                 </Button>
               </Left>
             ) : (
-              <></>
+              <Left>
+                <Button
+                  style={
+                    this.state.isLoading ? styles.buttonUser : styles.buttonUser
+                  }
+                  onPress={this.handleEditNameUser}>
+                  {this.state.isLoading ? (
+                    <View>
+                      <Spinner style={{marginLeft: '50%'}} color="white" />
+                    </View>
+                  ) : (
+                    <Text style={{marginLeft: '30%'}}> Save </Text>
+                  )}
+                </Button>
+              </Left>
             )}
 
             <Right>
@@ -365,7 +394,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderColor: 'transparent',
   },
-  buttonUser: {backgroundColor: '#ff8c00', borderRadius: 5},
+  buttonUser: {
+    backgroundColor: '#ff8c00',
+    borderRadius: 5,
+    width: 180,
+    textAlign: 'center',
+  },
   iconUser: {color: 'white', marginLeft: 10},
   white: {color: 'white'},
   black: {color: 'black'},

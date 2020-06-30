@@ -20,27 +20,16 @@ class Home extends Component {
     super();
     this.state = {
       startpage: 1,
-      page: 1,
-      limit: 6,
-      orderBy: 'asc',
-      sortBy: 'id',
-      token: '',
-      title: '',
       data: [],
       users: [],
-      pagination: {},
-      role: '',
       id_user: '',
       refreshing: false,
       loading: true,
       refreshToken: '',
       reload: false,
-      borrowTemp: [],
-      returnTemp: [],
       isNavBarHidden: false,
       loadMore: false,
       upButton: false,
-      showbookSlide: true,
     };
     this.onEndReachedCalledDuringMomentum = true;
   }
@@ -123,6 +112,7 @@ class Home extends Component {
           );
           this.setState({
             users: friendResult,
+            refreshing: false,
           });
         });
     }
@@ -143,6 +133,12 @@ class Home extends Component {
       });
     }
   };
+  handleRefresh = () => {
+    this.setState({refreshing: true}, () => {
+      this.getUserData();
+    });
+  };
+
   componentDidUpdate(prevprops, prevState) {
     if (prevprops.dataUser !== this.props.dataUser) {
       this.getUserData();
@@ -185,7 +181,7 @@ class Home extends Component {
                     item={item}
                   />
                 )}
-                initialNumToRender={10}
+                // initialNumToRender={10}
                 keyExtractor={(item, index) => index.toString()}
                 // ListHeaderComponent={this.renderHeader}
 
@@ -195,18 +191,18 @@ class Home extends Component {
                     onRefresh={this.handleRefresh}
                   />
                 }
-                onEndReached={this.handleLoadMore}
-                onEndReachedThreshold={0.5}
-                onMomentumScrollBegin={() => {
-                  // eslint-disable-next-line no-sequences
-                  (this.onEndReachedCalledDuringMomentum = false),
-                    this.setState({loadMore: false});
-                }}
+                // onEndReached={this.handleLoadMore}
+                // onEndReachedThreshold={0.5}
+                // onMomentumScrollBegin={() => {
+                //   // eslint-disable-next-line no-sequences
+                //   (this.onEndReachedCalledDuringMomentum = false),
+                //     this.setState({loadMore: false});
+                // }}
                 ref={ref => {
                   this.flatListRef = ref;
                 }}
                 ListFooterComponent={this._renderFooter}
-                onScrollEndDrag={() =>
+                onMomentumScrollBegin={() =>
                   this.setState({upButton: true, showbookSlide: false})
                 }
                 // onScroll={() => this.setState({showbookSlide: false})}

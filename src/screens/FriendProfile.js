@@ -11,12 +11,15 @@ import {
   Item,
   View,
   Header,
+  Form,
+  Textarea,
 } from 'native-base';
 import {Image, StyleSheet, BackHandler} from 'react-native';
 import EmailIcon from 'react-native-vector-icons/Fontisto';
 import {db} from '../utils/firebaseConfig';
 import MapView, {Marker} from 'react-native-maps';
 import AsyncStorage from '@react-native-community/async-storage';
+import {ScrollView} from 'react-native-gesture-handler';
 class FriendProfile extends Component {
   constructor(props) {
     super(props);
@@ -86,89 +89,113 @@ class FriendProfile extends Component {
     console.log(user);
     // this.getUserData();
     return (
-      <Container style={styles.container}>
-        <Header style={{backgroundColor: 'black'}}>
-          <Button
-            transparent
-            iconLeft
-            style={styles.backButton}
-            onPress={() => this.props.navigation.goBack(null)}>
-            <Icon style={styles.backIcon} name="ios-arrow-back" />
-          </Button>
-          <Text style={styles.title}>Profile</Text>
-        </Header>
-        <Card transparent style={styles.card}>
-          <CardItem transparent style={styles.cardItem1}>
-            <Text style={styles.textCardTitle}>
-              {this.props.route.params.item.fullName}
-            </Text>
-            <Image
-              style={styles.image}
-              source={
-                this.props.route.params.item.image
-                  ? {
-                      uri: this.props.route.params.item.image,
-                    }
-                  : require('../../image/photoprofile.png')
-              }
-            />
-            {/* </Left> */}
-            <Right>
-              <Item style={styles.item}>
-                <EmailIcon
-                  name="email"
-                  color="white"
-                  size={30}
-                  style={{marginTop: 21}}
-                />
-                <Text style={styles.textEmail}>
-                  {' '}
-                  {this.props.route.params.item.email}
-                </Text>
-              </Item>
-            </Right>
-          </CardItem>
-
-          <CardItem transparent style={styles.cardItem2}>
-            <Left />
-          </CardItem>
-        </Card>
-
-        <View style={styles.viewMaps}>
-          <MapView
-            showsUserLocation={true}
-            zoomControlEnabled={true}
-            style={styles.map}
-            initialRegion={{
-              latitude: this.props.route.params.item.latitude
-                ? this.props.route.params.item.latitude
-                : -7.983908,
-              longitude: this.props.route.params.item.longitude
-                ? this.props.route.params.item.longitude
-                : 112.621391,
-              latitudeDelta: 0.1922,
-              longitudeDelta: 0.1421,
-            }}>
-            <Marker
-              coordinate={{
-                latitude: this.props.route.params.item.latitude,
-                longitude: this.props.route.params.item.longitude,
-              }}
-              // pinColor={'purple'} // any color
-              title={this.props.route.params.item.fullName}
-              description={this.props.route.params.item.fullName + ' is here'}>
+      <ScrollView>
+        <Container style={styles.container}>
+          <Header style={{backgroundColor: 'black'}}>
+            <Button
+              transparent
+              iconLeft
+              style={styles.backButton}
+              onPress={() => this.props.navigation.goBack(null)}>
+              <Icon style={styles.backIcon} name="ios-arrow-back" />
+            </Button>
+            <Text style={styles.title}>Profile</Text>
+          </Header>
+          <Card transparent style={styles.card}>
+            <CardItem transparent style={styles.cardItem1}>
+              <Text style={styles.textCardTitle}>
+                {this.props.route.params.item.fullName}
+              </Text>
               <Image
+                style={styles.image}
                 source={
                   this.props.route.params.item.image
-                    ? {uri: this.props.route.params.item.image}
+                    ? {
+                        uri: this.props.route.params.item.image,
+                      }
                     : require('../../image/photoprofile.png')
                 }
-                style={{width: 50, height: 50, borderRadius: 300}}
               />
-            </Marker>
-          </MapView>
-        </View>
-      </Container>
+              {/* </Left> */}
+              <Right>
+                <Item style={styles.item}>
+                  <EmailIcon
+                    name="email"
+                    color="white"
+                    size={30}
+                    style={{marginTop: 21}}
+                  />
+                  <Text style={styles.textEmail}>
+                    {' '}
+                    {this.props.route.params.item.email}
+                  </Text>
+                </Item>
+              </Right>
+            </CardItem>
+
+            <CardItem transparent style={styles.cardItem2}>
+              <Left />
+            </CardItem>
+            <Form>
+              {/* <Text style={{
+                  color: 'white',
+                  backgroundColor: 'black',
+                  marginLeft:30,
+                  fontSize:14
+                }}>Bio</Text> */}
+              <Textarea
+                disabled={true}
+                rowSpan={2}
+                bordered
+                placeholder="Textarea"
+                defaultValue={this.props.route.params.item.bio}
+                style={{
+                  color: 'white',
+                  backgroundColor: 'black',
+                }}
+                // color="white"
+              />
+            </Form>
+          </Card>
+
+          <View style={styles.viewMaps}>
+            <MapView
+              showsUserLocation={true}
+              zoomControlEnabled={true}
+              style={styles.map}
+              initialRegion={{
+                latitude: this.props.route.params.item.latitude
+                  ? this.props.route.params.item.latitude
+                  : -7.983908,
+                longitude: this.props.route.params.item.longitude
+                  ? this.props.route.params.item.longitude
+                  : 112.621391,
+                latitudeDelta: 0.1922,
+                longitudeDelta: 0.1421,
+              }}>
+              <Marker
+                coordinate={{
+                  latitude: this.props.route.params.item.latitude,
+                  longitude: this.props.route.params.item.longitude,
+                }}
+                // pinColor={'purple'} // any color
+                title={this.props.route.params.item.fullName}
+                description={
+                  this.props.route.params.item.fullName + ' is here'
+                }>
+                <Image
+                  source={
+                    this.props.route.params.item.image
+                      ? {uri: this.props.route.params.item.image}
+                      : require('../../image/photoprofile.png')
+                  }
+                  style={{width: 50, height: 50, borderRadius: 300}}
+                />
+              </Marker>
+            </MapView>
+          </View>
+        </Container>
+      </ScrollView>
     );
   }
 }
@@ -241,7 +268,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     height: '60%',
     flex: 1,
-    marginTop: '50%',
+    marginTop: '65%',
     // justifyContent: 'flex-end',
     // alignItems: 'center',
   },

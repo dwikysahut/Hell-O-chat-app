@@ -32,6 +32,7 @@ this app built with React Native and  Google Firebase , Firebase Authentication 
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
 2. Node_modules `npm install` or `yarn install`
 3. [`react-native`](https://facebook.github.io/react-native/docs/getting-started)
+4. `Google maps API Key` you can get it [here](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 ## Setup Firebase Config
 if you run this app for development,Open setting in your firebase app, click general, copy your Firebase SDK snippet
@@ -45,17 +46,25 @@ paste to src/utils/firebaseConfig.js,
 
 ## Usage for development
 
-1. Download this Project 
+1. Clone this Project 
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
-4. Type `react-native run-android` or `yarn run android` if you use yarn
-5. [Setup firebase Config](#setup-firebase-config)
-6. Register your account
-7. Login to use
-8. Lets Chat!
+4. [Setup firebase Config](#setup-firebase-config)
+5. Add your goole maps API Key on `AndroidManifest.xml` 
+```
+  <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="YOUR_API_KEY"/>
+  ```
+6. Type `react-native run-android` or `yarn run android` if you use yarn
+7. Register your account
+8. Login to use
+9. Lets Chat!
 
-note : if you want to use directly . download apk [Download APK](#release-apk)
 
+
+## Setting Google Maps 
+ 
 ## Screenshots
 <div align="center">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200629-211416_Hell-O Chat.jpg">
