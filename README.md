@@ -74,7 +74,7 @@ paste to src/utils/firebaseConfig.js,
 </div>
 <div align="center">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105033_Hell-O Chat.jpg">
-  <img width="150" src="./src/assets/screenshot/Screenshot_20200628-105043_Hell-O Chat.jpg">
+  <img width="150" src="./src/assets/screenshot/Screenshot_20200630-112900_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200630-112850_Hell-O Chat.jpg">
   <img width="150" src="./src/assets/screenshot/Screenshot_20200629-211514_Hell-O Chat.jpg">
 
