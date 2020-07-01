@@ -36,12 +36,18 @@ this app built with React Native and  Google Firebase , Firebase Authentication 
 ## Setup Firebase Config
 if you run this app for development,Open setting in your firebase app, click general, copy your Firebase SDK snippet
 paste to src/utils/firebaseConfig.js, 
-
-
-<div align="center">
-<img width="300" height="200" src="./src/assets/screenshot/Screen Shot 2020-06-28 at 15.27.35.png">
-</div>
-
+```
+const firebaseConfig = {
+  apiKey: "YOUR_apiKey",
+  authDomain: "YOUR_authDomain",
+  databaseURL: "YOUR_databaseURL",
+  projectId: "YOUR_projectId",
+  storageBucket: "YOUR_storageBucket",
+  messagingSenderId: "YOUR_messagingSenderId",
+  appId: "YOUR_appId",
+  measurementId: "YOUR_measurementId"
+};
+```
 
 ## Usage for development
 
