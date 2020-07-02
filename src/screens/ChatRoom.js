@@ -164,12 +164,7 @@ class ChatRoom extends Component {
     console.disableYellowBox = true;
     return (
       <View style={styles.container}>
-        <Header
-          style={{
-            backgroundColor: 'black',
-            borderColor: 'white',
-            borderBottomWidth: 1,
-          }}>
+        <Header style={styles.header}>
           <Button
             transparent
             iconLeft
@@ -400,6 +395,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     flex: 1,
     paddingRight: 15,
+  },
+  header: {
+    backgroundColor: 'black',
+    borderColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: 'orange',
   },
   chatTemplateMessage: {
     maxWidth: '100%',
