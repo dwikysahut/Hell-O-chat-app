@@ -202,9 +202,7 @@ class Home extends Component {
                   this.flatListRef = ref;
                 }}
                 ListFooterComponent={this._renderFooter}
-                onMomentumScrollBegin={() =>
-                  this.setState({upButton: true, showbookSlide: false})
-                }
+                onScrollEndDrag={() => this.setState({upButton: true})}
                 // onScroll={() => this.setState({showbookSlide: false})}
               />
               {this.state.upButton ? (

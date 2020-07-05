@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     color: 'gold',
     fontWeight: 'bold',
   },
-  yellowColor: {color: 'yellow'},
+  yellowColor: {color: 'yellow', fontSize: 10},
   redColor: {color: 'red'},
   greenColor: {color: 'green'},
   hint: {marginLeft: 0, borderColor: 'black'},

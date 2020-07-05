@@ -155,6 +155,8 @@ class Register extends Component {
           switch (error.code) {
             case 'auth/email-already-in-use':
               this.showToast();
+              this.setState({isLoading: false});
+
               break;
           }
         });

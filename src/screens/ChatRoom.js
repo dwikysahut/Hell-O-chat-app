@@ -9,7 +9,7 @@ import {
   Alert,
   BackHandler,
 } from 'react-native';
-import {Button, Icon, Text, Header, Spinner, Container} from 'native-base';
+import {Button, Icon, Text, Header} from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import Iconsend from 'react-native-vector-icons/Ionicons';
 // import {GiftedChat, Bubble, InputToolbar, Send} from 'react-native-gifted-chat';
