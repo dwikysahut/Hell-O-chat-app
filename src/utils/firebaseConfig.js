@@ -1,8 +1,5 @@
 import * as Firebase from 'firebase';
-const firebaseConfig = {
-  //paste your firebaseConfig Here
-};
-
+//paste your firebase config here
 const fireApp = Firebase.initializeApp(firebaseConfig);
 // export const db = fireApp.database();
 export const db = fireApp;

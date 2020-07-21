@@ -80,6 +80,7 @@ class Login extends Component {
       25,
       50,
     );
+
   };
   showToastMessage = text => {
     ToastAndroid.showWithGravityAndOffset(
@@ -122,14 +123,16 @@ class Login extends Component {
     this.setState({isShow: true});
     if (this.state.validEmail && this.state.validPassword) {
       this.setState({isLoading: true});
-
       await this.props.loginAction(email, password);
       // console.log(this.getData('uid'));
-
+      
       db.auth().onAuthStateChanged(user => {
         if (user) {
           this.setState({email: '', password: '', isLoading: false});
           this.props.navigation.navigate('Home', {uid: user.uid});
+        }
+        else if(!user){
+          this.setState({isLoading: false});
         }
       });
     }
