@@ -7,7 +7,7 @@ import styles from '../styles/Auth';
 import {loginAction} from '../redux/actions/UserAction.js';
 import {connect} from 'react-redux';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   state = {
     email: '',
     isShow: false,
@@ -146,4 +146,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps,
-)(Login);
+)(ForgotPassword);

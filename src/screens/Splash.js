@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image, BackHandler} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -8,7 +8,7 @@ import {Container} from 'native-base';
 import {db} from '../utils/firebaseConfig';
 import {connect} from 'react-redux';
 
-class Home extends Component {
+class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,9 +27,13 @@ class Home extends Component {
     return value;
   };
   componentDidMount = async () => {
-    Geolocation.getCurrentPosition(info => {
-      console.log(this.state.currentLocate);
-    });
+    try {
+      Geolocation.getCurrentPosition(info => {
+        console.log(this.state.currentLocate);
+      });
+    } catch (error) {
+      BackHandler.exitApp();
+    }
     db.auth().onAuthStateChanged(user => {
       if (user) {
         setTimeout(() => {
@@ -133,4 +137,4 @@ const mapStateToProps = ({reducerUser}) => {
 export default connect(
   mapStateToProps,
   null,
-)(Home);
+)(Splash);

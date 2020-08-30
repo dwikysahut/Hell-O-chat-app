@@ -28,25 +28,28 @@ class Maps extends Component {
   };
   render() {
     // const [marker, setMarker] = useState(null);
-    const userMarker = this.state.userList.map(data => (
+    const userMarker = this.state.userList.map(data =>
       // console.log(data);
-      // if (data.latitude && data.longitude){
-      // console.log(data.longitude);
-      <Marker
-        coordinate={{latitude: data.latitude, longitude: data.longitude}}
-        // pinColor={'purple'} // any color
-        title={data.uid === this.props.dataUser.uid ? 'Me' : data.fullName}
-        description={'Hi.. I am Here'}>
-        <Image
-          source={
-            data.image
-              ? {uri: data.image}
-              : require('../../image/photoprofile.png')
-          }
-          style={{width: 50, height: 50, borderRadius: 300}}
-        />
-      </Marker>
-    ));
+      data.latitude && data.longitude ? (
+        // console.log(data.longitude);
+        <Marker
+          coordinate={{latitude: data.latitude, longitude: data.longitude}}
+          // pinColor={'purple'} // any color
+          title={data.uid === this.props.dataUser.uid ? 'Me' : data.fullName}
+          description={'Hi.. I am Here'}>
+          <Image
+            source={
+              data.image
+                ? {uri: data.image}
+                : require('../../image/photoprofile.png')
+            }
+            style={{width: 50, height: 50, borderRadius: 300}}
+          />
+        </Marker>
+      ) : (
+        <></>
+      ),
+    );
 
     // console.log(marker);
     return (

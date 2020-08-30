@@ -18,7 +18,7 @@
 - [Contributors](#contributor)
 
 ## Introduction
-this app built with React Native and  Google Firebase , Firebase Authentication , and Firebase Storage for save image . with Hell-O chat make us know a lot of people. and with online feature , we can know toher people stay on app(online) or offline. we can find our frined location and sharing location.
+this app built with React Native and  Google Firebase , Firebase Authentication , and Firebase Storage for save image . with Hell-O chat make us know a lot of people. and with online feature , we can know toher people stay on app(online) or offline. we can find our friend location and sharing location.
 
 ## Features
 1. Users login or register if don't have account
@@ -55,7 +55,7 @@ const firebaseConfig = {
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
 4. [Setup firebase Config](#setup-firebase-config)
-5. Add your goole maps API Key on `AndroidManifest.xml` 
+5. Add your google maps API Key on `AndroidManifest.xml` 
 ```
   <meta-data
         android:name="com.google.android.geo.API_KEY"
@@ -86,7 +86,7 @@ const firebaseConfig = {
 </div>
 
 ## Release APK
-<a href="https://bit.ly/3fPsS9N">
+<a href="https://drive.google.com/file/d/1Wtt9BwubWAiIjYbI-ZJuvtlVfra-poAG/view?usp=sharing">
   <img src="https://img.shields.io/badge/Download%20on%20the-Google%20Drive-blue.svg?style=popout&logo=google-drive"/>
 </a>
 
